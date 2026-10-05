@@ -1,5 +1,5 @@
 # Files kept out of the release zip. bin/build-zip.sh copies an allow-list
-# (cph-filebird.php, uninstall.php, readme.txt, includes/, assets/build/,
+# (cph-filebirb.php, uninstall.php, readme.txt, includes/, assets/build/,
 # languages/, production vendor/); this list mirrors it for other tooling
 # such as `wp dist-archive`.
 /.git

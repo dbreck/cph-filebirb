@@ -2,14 +2,14 @@
 /**
  * CSV tests.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Tests;
+namespace CPH\FileBirb\Tests;
 
-use CPH\FileBird\Csv;
+use CPH\FileBirb\Csv;
 
 /**
  * Export / import round trip, FileBird files, formula guard.

@@ -53,7 +53,7 @@ export default function ResizeHandle( { initialWidth, onWidth } ) {
 			className="cphfb-resize"
 			role="separator"
 			aria-orientation="vertical"
-			aria-label={ __( 'Resize folder panel', 'cph-filebird' ) }
+			aria-label={ __( 'Resize folder panel', 'cph-filebirb' ) }
 			aria-valuemin={ MIN_WIDTH }
 			aria-valuemax={ MAX_WIDTH }
 			aria-valuenow={ width }

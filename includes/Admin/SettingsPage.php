@@ -2,17 +2,17 @@
 /**
  * Media → Folder Settings screen.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Admin;
+namespace CPH\FileBirb\Admin;
 
-use CPH\FileBird\Csv;
-use CPH\FileBird\Install;
-use CPH\FileBird\Model\Assignment;
-use CPH\FileBird\Model\Settings;
+use CPH\FileBirb\Csv;
+use CPH\FileBirb\Install;
+use CPH\FileBirb\Model\Assignment;
+use CPH\FileBirb\Model\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -89,8 +89,8 @@ final class SettingsPage {
 	public function add_page(): void {
 		add_submenu_page(
 			'upload.php',
-			__( 'Folder Settings', 'cph-filebird' ),
-			__( 'Folder Settings', 'cph-filebird' ),
+			__( 'Folder Settings', 'cph-filebirb' ),
+			__( 'Folder Settings', 'cph-filebirb' ),
 			self::CAP,
 			self::SLUG,
 			array( $this, 'render' )
@@ -113,29 +113,29 @@ final class SettingsPage {
 			)
 		);
 
-		add_settings_section( 'cphfb_general', __( 'Folders', 'cph-filebird' ), '__return_false', self::SLUG );
+		add_settings_section( 'cphfb_general', __( 'Folders', 'cph-filebirb' ), '__return_false', self::SLUG );
 
-		add_settings_field( 'default_sort', __( 'Default folder sort', 'cph-filebird' ), array( $this, 'field_sort' ), self::SLUG, 'cphfb_general', array( 'label_for' => 'cphfb-default-sort' ) );
+		add_settings_field( 'default_sort', __( 'Default folder sort', 'cph-filebirb' ), array( $this, 'field_sort' ), self::SLUG, 'cphfb_general', array( 'label_for' => 'cphfb-default-sort' ) );
 		add_settings_field(
 			'include_subfolders_in_count',
-			__( 'Folder counts', 'cph-filebird' ),
+			__( 'Folder counts', 'cph-filebirb' ),
 			array( $this, 'field_checkbox' ),
 			self::SLUG,
 			'cphfb_general',
 			array(
 				'key'   => 'include_subfolders_in_count',
-				'label' => __( 'Include files in subfolders in each folder\'s count', 'cph-filebird' ),
+				'label' => __( 'Include files in subfolders in each folder\'s count', 'cph-filebirb' ),
 			)
 		);
 		add_settings_field(
 			'include_subfolders_in_query',
-			__( 'Folder view', 'cph-filebird' ),
+			__( 'Folder view', 'cph-filebirb' ),
 			array( $this, 'field_checkbox' ),
 			self::SLUG,
 			'cphfb_general',
 			array(
 				'key'   => 'include_subfolders_in_query',
-				'label' => __( 'Show files in subfolders when a folder is selected', 'cph-filebird' ),
+				'label' => __( 'Show files in subfolders when a folder is selected', 'cph-filebirb' ),
 			)
 		);
 	}
@@ -167,9 +167,9 @@ final class SettingsPage {
 	 */
 	public function field_sort(): void {
 		$labels  = array(
-			'ord'       => __( 'Custom order', 'cph-filebird' ),
-			'name_asc'  => __( 'Name (A–Z)', 'cph-filebird' ),
-			'name_desc' => __( 'Name (Z–A)', 'cph-filebird' ),
+			'ord'       => __( 'Custom order', 'cph-filebirb' ),
+			'name_asc'  => __( 'Name (A–Z)', 'cph-filebirb' ),
+			'name_desc' => __( 'Name (Z–A)', 'cph-filebirb' ),
 		);
 		$current = Settings::get_instance()->get( 'default_sort' );
 		echo '<select id="cphfb-default-sort" name="' . esc_attr( Settings::OPTION ) . '[default_sort]">';
@@ -208,16 +208,16 @@ final class SettingsPage {
 
 		$counts = Assignment::get_instance()->counts();
 		$status = array(
-			__( 'Folders', 'cph-filebird' )              => number_format_i18n( count( $counts['folders'] ) ),
-			__( 'Assigned attachments', 'cph-filebird' ) => number_format_i18n( $counts['all'] - $counts['uncategorized'] ),
-			__( 'Uncategorized', 'cph-filebird' )        => number_format_i18n( $counts['uncategorized'] ),
-			__( 'Database version', 'cph-filebird' )     => (string) get_option( Install::VERSION_OPTION, '' ),
-			__( 'Plugin version', 'cph-filebird' )       => CPHFB_VERSION,
+			__( 'Folders', 'cph-filebirb' )              => number_format_i18n( count( $counts['folders'] ) ),
+			__( 'Assigned attachments', 'cph-filebirb' ) => number_format_i18n( $counts['all'] - $counts['uncategorized'] ),
+			__( 'Uncategorized', 'cph-filebirb' )        => number_format_i18n( $counts['uncategorized'] ),
+			__( 'Database version', 'cph-filebirb' )     => (string) get_option( Install::VERSION_OPTION, '' ),
+			__( 'Plugin version', 'cph-filebirb' )       => CPHFB_VERSION,
 		);
 		$post   = admin_url( 'admin-post.php' );
 		?>
 		<div class="wrap">
-			<h1><?php esc_html_e( 'Folder Settings', 'cph-filebird' ); ?></h1>
+			<h1><?php esc_html_e( 'Folder Settings', 'cph-filebirb' ); ?></h1>
 			<?php $this->render_notice(); ?>
 
 			<form method="post" action="options.php">
@@ -229,45 +229,45 @@ final class SettingsPage {
 			</form>
 
 			<hr />
-			<h2><?php esc_html_e( 'Tools', 'cph-filebird' ); ?></h2>
+			<h2><?php esc_html_e( 'Tools', 'cph-filebirb' ); ?></h2>
 			<table class="form-table" role="presentation">
 				<tr>
-					<th scope="row"><?php esc_html_e( 'Export CSV', 'cph-filebird' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Export CSV', 'cph-filebirb' ); ?></th>
 					<td>
 						<form method="post" action="<?php echo esc_url( $post ); ?>">
 							<input type="hidden" name="action" value="cphfb_export_csv" />
 							<?php wp_nonce_field( 'cphfb_export_csv' ); ?>
-							<?php submit_button( __( 'Download CSV', 'cph-filebird' ), 'secondary', 'submit', false ); ?>
-							<p class="description"><?php esc_html_e( 'Every folder and its attachment IDs, in a format FileBird can also read.', 'cph-filebird' ); ?></p>
+							<?php submit_button( __( 'Download CSV', 'cph-filebirb' ), 'secondary', 'submit', false ); ?>
+							<p class="description"><?php esc_html_e( 'Every folder and its attachment IDs, in a format FileBird can also read.', 'cph-filebirb' ); ?></p>
 						</form>
 					</td>
 				</tr>
 				<tr>
-					<th scope="row"><label for="cphfb-import-file"><?php esc_html_e( 'Import CSV', 'cph-filebird' ); ?></label></th>
+					<th scope="row"><label for="cphfb-import-file"><?php esc_html_e( 'Import CSV', 'cph-filebirb' ); ?></label></th>
 					<td>
 						<form method="post" action="<?php echo esc_url( $post ); ?>" enctype="multipart/form-data">
 							<input type="hidden" name="action" value="cphfb_import_csv" />
 							<?php wp_nonce_field( 'cphfb_import_csv' ); ?>
 							<input type="file" id="cphfb-import-file" name="cphfb_csv" accept=".csv,text/csv" required />
-							<?php submit_button( __( 'Import', 'cph-filebird' ), 'secondary', 'submit', false ); ?>
-							<p class="description"><?php esc_html_e( 'Folders with the same name under the same parent are merged.', 'cph-filebird' ); ?></p>
+							<?php submit_button( __( 'Import', 'cph-filebirb' ), 'secondary', 'submit', false ); ?>
+							<p class="description"><?php esc_html_e( 'Folders with the same name under the same parent are merged.', 'cph-filebirb' ); ?></p>
 						</form>
 					</td>
 				</tr>
 				<tr>
-					<th scope="row"><?php esc_html_e( 'Clean up', 'cph-filebird' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Clean up', 'cph-filebirb' ); ?></th>
 					<td>
 						<form method="post" action="<?php echo esc_url( $post ); ?>">
 							<input type="hidden" name="action" value="cphfb_cleanup" />
 							<?php wp_nonce_field( 'cphfb_cleanup' ); ?>
-							<?php submit_button( __( 'Remove orphaned rows', 'cph-filebird' ), 'secondary', 'submit', false ); ?>
-							<p class="description"><?php esc_html_e( 'Deletes folder assignments whose folder or attachment no longer exists.', 'cph-filebird' ); ?></p>
+							<?php submit_button( __( 'Remove orphaned rows', 'cph-filebirb' ), 'secondary', 'submit', false ); ?>
+							<p class="description"><?php esc_html_e( 'Deletes folder assignments whose folder or attachment no longer exists.', 'cph-filebirb' ); ?></p>
 						</form>
 					</td>
 				</tr>
 			</table>
 
-			<h2><?php esc_html_e( 'Status', 'cph-filebird' ); ?></h2>
+			<h2><?php esc_html_e( 'Status', 'cph-filebirb' ); ?></h2>
 			<table class="widefat striped" style="max-width:40em">
 				<tbody>
 				<?php foreach ( $status as $label => $value ) : ?>
@@ -290,7 +290,7 @@ final class SettingsPage {
 	public function export_csv(): void {
 		$this->guard( 'cphfb_export_csv' );
 
-		$filename = sprintf( 'cph-filebird-%s.csv', gmdate( 'Y-m-d' ) );
+		$filename = sprintf( 'cph-filebirb-%s.csv', gmdate( 'Y-m-d' ) );
 		nocache_headers();
 		header( 'Content-Type: text/csv; charset=utf-8' );
 		header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
@@ -308,12 +308,12 @@ final class SettingsPage {
 
 		$file = $_FILES['cphfb_csv'] ?? null; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- nonce checked in guard(); tmp_name is checked with is_uploaded_file.
 		if ( ! is_array( $file ) || UPLOAD_ERR_OK !== (int) ( $file['error'] ?? UPLOAD_ERR_NO_FILE ) || ! is_uploaded_file( (string) $file['tmp_name'] ) ) {
-			$this->redirect( 'error', __( 'No file was uploaded.', 'cph-filebird' ) );
+			$this->redirect( 'error', __( 'No file was uploaded.', 'cph-filebirb' ) );
 		}
 
 		// Checked before reading; Csv::import() checks again for the REST and CLI paths.
 		if ( (int) filesize( (string) $file['tmp_name'] ) > Csv::max_bytes() ) {
-			$this->redirect( 'error', __( 'That CSV file is too large.', 'cph-filebird' ) );
+			$this->redirect( 'error', __( 'That CSV file is too large.', 'cph-filebirb' ) );
 		}
 
 		$result = Csv::get_instance()->import( (string) file_get_contents( (string) $file['tmp_name'] ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
@@ -322,7 +322,7 @@ final class SettingsPage {
 		}
 
 		/* translators: 1: folder count, 2: assignment count. */
-		$this->redirect( 'success', sprintf( __( 'Imported %1$d folders and %2$d assignments.', 'cph-filebird' ), $result['folders'], $result['assignments'] ) );
+		$this->redirect( 'success', sprintf( __( 'Imported %1$d folders and %2$d assignments.', 'cph-filebirb' ), $result['folders'], $result['assignments'] ) );
 	}
 
 	/**
@@ -334,7 +334,7 @@ final class SettingsPage {
 		$this->guard( 'cphfb_cleanup' );
 		$removed = Assignment::get_instance()->cleanup_orphans();
 		/* translators: %d: number of rows removed. */
-		$this->redirect( 'success', sprintf( _n( 'Removed %d orphaned row.', 'Removed %d orphaned rows.', $removed, 'cph-filebird' ), $removed ) );
+		$this->redirect( 'success', sprintf( _n( 'Removed %d orphaned row.', 'Removed %d orphaned rows.', $removed, 'cph-filebirb' ), $removed ) );
 	}
 
 	/**
@@ -345,7 +345,7 @@ final class SettingsPage {
 	 */
 	public function action_links( $links ): array {
 		$links = (array) $links;
-		array_unshift( $links, sprintf( '<a href="%s">%s</a>', esc_url( self::url() ), esc_html__( 'Settings', 'cph-filebird' ) ) );
+		array_unshift( $links, sprintf( '<a href="%s">%s</a>', esc_url( self::url() ), esc_html__( 'Settings', 'cph-filebirb' ) ) );
 		return $links;
 	}
 
@@ -357,7 +357,7 @@ final class SettingsPage {
 	 */
 	private function guard( string $action ): void {
 		if ( ! current_user_can( self::CAP ) ) {
-			wp_die( esc_html__( 'You do not have permission to do that.', 'cph-filebird' ), '', array( 'response' => 403 ) );
+			wp_die( esc_html__( 'You do not have permission to do that.', 'cph-filebirb' ), '', array( 'response' => 403 ) );
 		}
 		check_admin_referer( $action );
 	}

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build the release zip: dist/cph-filebird.zip with a top-level cph-filebird/ folder
+# Build the release zip: dist/cph-filebirb.zip with a top-level cph-filebirb/ folder
 # holding only runtime files and a production vendor/.
 #
 # Usage: bin/build-zip.sh [--skip-build]
@@ -11,7 +11,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SLUG="cph-filebird"
+SLUG="cph-filebirb"
 DIST="$ROOT/dist"
 ZIP="$DIST/$SLUG.zip"
 SKIP_BUILD=0
@@ -44,7 +44,7 @@ STAGE="$WORK/$SLUG"
 mkdir -p "$STAGE"
 
 echo "==> Staging runtime files"
-cp cph-filebird.php uninstall.php readme.txt composer.json composer.lock "$STAGE/"
+cp cph-filebirb.php uninstall.php readme.txt composer.json composer.lock "$STAGE/"
 # Copy with rsync so dotfiles and OS junk stay out.
 RSYNC_EXCLUDES=(--exclude '.*' --exclude '*.map' --exclude 'Thumbs.db')
 rsync -a "${RSYNC_EXCLUDES[@]}" includes/ "$STAGE/includes/"
@@ -121,7 +121,7 @@ foreach ( $it as $file ) {
 		continue;
 	}
 	$relative = substr( $file->getPathname(), strlen( $root . '/includes/' ), -4 );
-	$class    = 'CPH\\FileBird\\' . str_replace( '/', '\\', $relative );
+	$class    = 'CPH\\FileBirb\\' . str_replace( '/', '\\', $relative );
 	++$count;
 	if ( ! class_exists( $class, true ) ) {
 		$missing[] = $class;

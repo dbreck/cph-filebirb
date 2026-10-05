@@ -2,22 +2,22 @@
 
 Clear pH's media-library folder plugin: a from-scratch, data-compatible replacement for FileBird Pro. It uses FileBird's own tables (`{prefix}fbv`, `{prefix}fbv_attachment_folder`), so a site swaps plugins with no migration.
 
-The repository folder is named `cph-filebirb`; everything inside uses `cph-filebird`. `PLAN.md` is the spec and `CLAUDE.md` holds the hard rules and decisions.
+The repository folder is named `cph-filebirb`; everything inside uses `cph-filebirb`. `PLAN.md` is the spec and `CLAUDE.md` holds the hard rules and decisions.
 
 ## Architecture
 
-PHP 8.1+, WordPress 6.5+. Namespace `CPH\FileBird`, PSR-4 from `includes/`, one singleton class per file (`get_instance()`).
+PHP 8.1+, WordPress 6.5+. Namespace `CPH\FileBirb`, PSR-4 from `includes/`, one singleton class per file (`get_instance()`).
 
 | Path | Role |
 | --- | --- |
-| `cph-filebird.php` | Bootstrap. Version guard (parses on PHP 7), autoloader check, activation hook. |
+| `cph-filebirb.php` | Bootstrap. Version guard (parses on PHP 7), autoloader check, activation hook. |
 | `includes/Plugin.php` | Boots every component unless FileBird is active (then shows a notice and stops). |
 | `includes/Install.php` | Creates the two tables with FileBird's exact DDL, seeds `cphfb_settings` once. |
 | `includes/Model/` | `Folder`, `Assignment`, `Settings`, `UserSettings`. |
 | `includes/Query.php` | `fbv` query var for `WP_Query`, the media modal and `/wp/v2/media`. |
 | `includes/Upload.php` | Upload routing and assignment housekeeping. |
 | `includes/Hooks.php` | Fires every `cphfb_*` hook, then its FileBird twin. |
-| `includes/Rest/` | REST controllers (`cph-filebird/v1`). |
+| `includes/Rest/` | REST controllers (`cph-filebirb/v1`). |
 | `includes/Cli/` | `wp cphfb` commands. |
 | `includes/Admin/` | Settings page, list-table column and bulk action, attachment field, assets. |
 | `includes/Updater.php` | GitHub release updates via Plugin Update Checker. |
@@ -70,7 +70,7 @@ Plugin-only filters: `cphfb_update_repo_url` (update repository URL), `cphfb_csv
 
 ## REST API
 
-Namespace `cph-filebird/v1`. Cookie auth needs an `X-WP-Nonce`. Reads and folder or file changes need `upload_files` (assignment also drops IDs the user cannot `edit_post`); global settings and CSV import need `manage_options`.
+Namespace `cph-filebirb/v1`. Cookie auth needs an `X-WP-Nonce`. Reads and folder or file changes need `upload_files` (assignment also drops IDs the user cannot `edit_post`); global settings and CSV import need `manage_options`.
 
 | Method | Route | Purpose |
 | --- | --- | --- |
@@ -125,13 +125,13 @@ Never run PHPUnit outside `bin/test.sh`: the WP test suite reinstalls its tables
 
 ## Releases
 
-Updates ship from GitHub releases through Plugin Update Checker. Every release needs an asset named exactly `cph-filebird.zip`; the updater ignores releases without it (the tag's source zip has no `vendor/` or built assets).
+Updates ship from GitHub releases through Plugin Update Checker. Every release needs an asset named exactly `cph-filebirb.zip`; the updater ignores releases without it (the tag's source zip has no `vendor/` or built assets).
 
-1. Bump the version in `cph-filebird.php` (header `Version:` and `CPHFB_VERSION`) and in `readme.txt` (`Stable tag:`). Add a changelog entry to `readme.txt`.
+1. Bump the version in `cph-filebirb.php` (header `Version:` and `CPHFB_VERSION`) and in `readme.txt` (`Stable tag:`). Add a changelog entry to `readme.txt`.
 2. Commit and push.
 3. Tag: `git tag vX.Y.Z && git push origin vX.Y.Z`.
-4. Build: `bin/build-zip.sh` (runs `npm run build`, stages runtime files, installs a production `vendor/` in a temp copy, checks that nothing from `reference/` or FileBird's bundles is included, lints every PHP file and loads every class from the zip). Output: `dist/cph-filebird.zip`.
-5. Release: `gh release create vX.Y.Z dist/cph-filebird.zip --title "vX.Y.Z" --notes "..."`.
+4. Build: `bin/build-zip.sh` (runs `npm run build`, stages runtime files, installs a production `vendor/` in a temp copy, checks that nothing from `reference/` or FileBird's bundles is included, lints every PHP file and loads every class from the zip). Output: `dist/cph-filebirb.zip`.
+5. Release: `gh release create vX.Y.Z dist/cph-filebirb.zip --title "vX.Y.Z" --notes "..."`.
 
 Sites pick the update up on their next update check (Dashboard > Updates > Check again forces it).
 
@@ -140,9 +140,9 @@ Sites pick the update up on their next update check (Dashboard > Updates > Check
 `bin/cutover.sh` switches one site from FileBird to CPH FileBirb:
 
 ```
-bin/cutover.sh --wp "wp --ssh=user@host/path" --zip https://github.com/dbreck/cph-filebird/releases/download/vX.Y.Z/cph-filebird.zip --dry-run
+bin/cutover.sh --wp "wp --ssh=user@host/path" --zip https://github.com/dbreck/cph-filebirb/releases/download/vX.Y.Z/cph-filebirb.zip --dry-run
 bin/cutover.sh --wp "wplocal mysite"
 bin/cutover.sh --wp "npx wp-env run cli wp" --dry-run
 ```
 
-It checks the tables, records folder and assignment counts from SQL, exports both tables to a local backup (never on the remote host), deactivates FileBird, installs and activates CPH FileBirb, runs `wp cphfb verify`, and compares counts. Any failure rolls back to FileBird and exits non-zero. FileBird's plugin files are never deleted. `--zip` is read on the site's host, so use a release URL over SSH. If the site's `cph-filebird` folder is a symlink or dev checkout, the install step is skipped.
+It checks the tables, records folder and assignment counts from SQL, exports both tables to a local backup (never on the remote host), deactivates FileBird, installs and activates CPH FileBirb, runs `wp cphfb verify`, and compares counts. Any failure rolls back to FileBird and exits non-zero. FileBird's plugin files are never deleted. `--zip` is read on the site's host, so use a release URL over SSH. If the site's `cph-filebirb` folder is a symlink or dev checkout, the install step is skipped.

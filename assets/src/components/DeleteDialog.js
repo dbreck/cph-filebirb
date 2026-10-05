@@ -46,12 +46,12 @@ export default function DeleteDialog( { node, onConfirm, onClose } ) {
 		>
 			<div className="cphfb-dialog__body">
 				<h2 id="cphfb-delete-title" className="cphfb-dialog__title">
-					{ sprintf( /* translators: %s: folder name */ __( 'Delete “%s”?', 'cph-filebird' ), node.name ) }
+					{ sprintf( /* translators: %s: folder name */ __( 'Delete “%s”?', 'cph-filebirb' ), node.name ) }
 				</h2>
 				<div id="cphfb-delete-desc">
 					<p className="cphfb-dialog__note">
-						<strong>{ __( 'Your files are safe.', 'cph-filebird' ) }</strong>{ ' ' }
-						{ __( 'Deleting a folder never deletes media files. Files in deleted folders move to Uncategorized.', 'cph-filebird' ) }
+						<strong>{ __( 'Your files are safe.', 'cph-filebirb' ) }</strong>{ ' ' }
+						{ __( 'Deleting a folder never deletes media files. Files in deleted folders move to Uncategorized.', 'cph-filebirb' ) }
 					</p>
 					{ hasChildren && (
 						<p>
@@ -61,7 +61,7 @@ export default function DeleteDialog( { node, onConfirm, onClose } ) {
 									'This folder contains %d subfolder. What should happen to it?',
 									'This folder contains %d subfolders. What should happen to them?',
 									subfolders,
-									'cph-filebird'
+									'cph-filebirb'
 								),
 								subfolders
 							) }
@@ -77,16 +77,16 @@ export default function DeleteDialog( { node, onConfirm, onClose } ) {
 					disabled={ busy }
 				>
 					{ hasChildren
-						? __( 'Delete folder and subfolders', 'cph-filebird' )
-						: __( 'Delete folder', 'cph-filebird' ) }
+						? __( 'Delete folder and subfolders', 'cph-filebirb' )
+						: __( 'Delete folder', 'cph-filebirb' ) }
 				</button>
 				{ hasChildren && (
 					<button type="button" className="button" onClick={ () => confirm( 'children-up' ) } disabled={ busy }>
-						{ __( 'Keep subfolders (move them up)', 'cph-filebird' ) }
+						{ __( 'Keep subfolders (move them up)', 'cph-filebirb' ) }
 					</button>
 				) }
 				<button type="button" className="button cphfb-dialog__cancel" ref={ cancelRef } onClick={ onClose } disabled={ busy }>
-					{ __( 'Cancel', 'cph-filebird' ) }
+					{ __( 'Cancel', 'cph-filebirb' ) }
 				</button>
 			</div>
 		</dialog>,

@@ -1,5 +1,5 @@
 /**
- * cph-filebird admin entry: folder sidebar for the Media Library, folder
+ * cph-filebirb admin entry: folder sidebar for the Media Library, folder
  * column in every `wp.media` frame, upload routing, attachment drag to folder.
  *
  * Nothing heavy runs on load: prototype hooks only. React mounts when a

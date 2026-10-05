@@ -2,16 +2,16 @@
 /**
  * REST: global and per-user settings, CSV export / import.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Rest;
+namespace CPH\FileBirb\Rest;
 
-use CPH\FileBird\Csv;
-use CPH\FileBird\Model\Settings;
-use CPH\FileBird\Model\UserSettings;
+use CPH\FileBirb\Csv;
+use CPH\FileBirb\Model\Settings;
+use CPH\FileBirb\Model\UserSettings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -192,7 +192,7 @@ final class SettingsController {
 	public function export(): \WP_REST_Response {
 		$response = new \WP_REST_Response( Csv::get_instance()->export() );
 		$response->header( 'Content-Type', 'text/csv; charset=utf-8' );
-		$response->header( 'Content-Disposition', 'attachment; filename="cph-filebird-folders-' . gmdate( 'Y-m-d' ) . '.csv"' );
+		$response->header( 'Content-Disposition', 'attachment; filename="cph-filebirb-folders-' . gmdate( 'Y-m-d' ) . '.csv"' );
 		return $response;
 	}
 
@@ -211,7 +211,7 @@ final class SettingsController {
 			$csv = $request['csv'];
 		}
 		if ( null === $csv ) {
-			return new \WP_Error( 'invalid_csv', __( 'Choose a CSV file to import.', 'cph-filebird' ), array( 'status' => 400 ) );
+			return new \WP_Error( 'invalid_csv', __( 'Choose a CSV file to import.', 'cph-filebirb' ), array( 'status' => 400 ) );
 		}
 
 		$result = Csv::get_instance()->import( $csv );

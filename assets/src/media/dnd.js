@@ -72,7 +72,7 @@ function dragImage( count ) {
 	ghost.className = 'cphfb-drag-ghost';
 	ghost.textContent = sprintf(
 		/* translators: %s: number of files */
-		_n( '%s file', '%s files', count, 'cph-filebird' ),
+		_n( '%s file', '%s files', count, 'cph-filebirb' ),
 		count.toLocaleString()
 	);
 	document.body.appendChild( ghost );

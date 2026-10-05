@@ -2,16 +2,16 @@
 /**
  * Folder filter, column and bulk move for upload.php list mode.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Admin;
+namespace CPH\FileBirb\Admin;
 
-use CPH\FileBird\Model\Assignment;
-use CPH\FileBird\Model\Folder;
-use CPH\FileBird\Query;
+use CPH\FileBirb\Model\Assignment;
+use CPH\FileBirb\Model\Folder;
+use CPH\FileBirb\Query;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -93,19 +93,19 @@ final class ListTable {
 		$current = $current ?? Folder::ALL;
 		$counts  = Assignment::get_instance()->counts();
 
-		echo '<label for="filter-by-fbv" class="screen-reader-text">' . esc_html__( 'Filter by folder', 'cph-filebird' ) . '</label>';
+		echo '<label for="filter-by-fbv" class="screen-reader-text">' . esc_html__( 'Filter by folder', 'cph-filebirb' ) . '</label>';
 		echo '<select name="' . esc_attr( Query::VAR ) . '" id="filter-by-fbv" class="attachment-filters">';
-		$this->option( Folder::ALL, __( 'All Folders', 'cph-filebird' ), $counts['all'], $current );
-		$this->option( Folder::UNCATEGORIZED, __( 'Uncategorized', 'cph-filebird' ), $counts['uncategorized'], $current );
+		$this->option( Folder::ALL, __( 'All Folders', 'cph-filebirb' ), $counts['all'], $current );
+		$this->option( Folder::UNCATEGORIZED, __( 'Uncategorized', 'cph-filebirb' ), $counts['uncategorized'], $current );
 		foreach ( Folder::get_instance()->flat() as $node ) {
 			$this->option( $node['id'], $this->indent( $node ), $counts['folders'][ $node['id'] ] ?? 0, $current );
 		}
 		echo '</select>';
 
-		echo '<label for="cphfb-bulk-folder" class="screen-reader-text">' . esc_html__( 'Bulk move target folder', 'cph-filebird' ) . '</label>';
+		echo '<label for="cphfb-bulk-folder" class="screen-reader-text">' . esc_html__( 'Bulk move target folder', 'cph-filebirb' ) . '</label>';
 		echo '<select name="' . esc_attr( self::BULK_TARGET ) . '" id="cphfb-bulk-folder" class="cphfb-bulk-folder">';
-		echo '<option value="">' . esc_html__( 'Move to folder…', 'cph-filebird' ) . '</option>';
-		echo '<option value="0">' . esc_html__( 'Uncategorized', 'cph-filebird' ) . '</option>';
+		echo '<option value="">' . esc_html__( 'Move to folder…', 'cph-filebirb' ) . '</option>';
+		echo '<option value="0">' . esc_html__( 'Uncategorized', 'cph-filebirb' ) . '</option>';
 		foreach ( Folder::get_instance()->flat() as $node ) {
 			echo '<option value="' . esc_attr( (string) $node['id'] ) . '">' . esc_html( $this->indent( $node ) ) . '</option>';
 		}
@@ -119,7 +119,7 @@ final class ListTable {
 	 * @return array
 	 */
 	public function add_column( $columns ) {
-		$columns[ self::COLUMN ] = __( 'Folder', 'cph-filebird' );
+		$columns[ self::COLUMN ] = __( 'Folder', 'cph-filebirb' );
 		return $columns;
 	}
 
@@ -137,7 +137,7 @@ final class ListTable {
 		$folder = Query::get_instance()->folder_of( (int) $post_id );
 		$names  = $this->names();
 		if ( $folder <= 0 || ! isset( $names[ $folder ] ) ) {
-			echo esc_html__( 'Uncategorized', 'cph-filebird' );
+			echo esc_html__( 'Uncategorized', 'cph-filebirb' );
 			return;
 		}
 		$url = add_query_arg(
@@ -158,7 +158,7 @@ final class ListTable {
 	 */
 	public function add_bulk_action( $actions ) {
 		if ( current_user_can( 'upload_files' ) ) {
-			$actions[ self::BULK_ACTION ] = __( 'Move to folder…', 'cph-filebird' );
+			$actions[ self::BULK_ACTION ] = __( 'Move to folder…', 'cph-filebirb' );
 		}
 		return $actions;
 	}
@@ -204,12 +204,12 @@ final class ListTable {
 		}
 		$raw = sanitize_text_field( wp_unslash( $_GET['cphfb_moved'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( 'error' === $raw ) {
-			echo '<div class="notice notice-error is-dismissible"><p>' . esc_html__( 'Pick a valid folder to move the selected files to.', 'cph-filebird' ) . '</p></div>';
+			echo '<div class="notice notice-error is-dismissible"><p>' . esc_html__( 'Pick a valid folder to move the selected files to.', 'cph-filebirb' ) . '</p></div>';
 			return;
 		}
 		$n = absint( $raw );
 		/* translators: %d: number of files moved. */
-		$msg = sprintf( _n( '%d file moved.', '%d files moved.', $n, 'cph-filebird' ), $n );
+		$msg = sprintf( _n( '%d file moved.', '%d files moved.', $n, 'cph-filebirb' ), $n );
 		echo '<div class="notice notice-success is-dismissible"><p>' . esc_html( $msg ) . '</p></div>';
 	}
 

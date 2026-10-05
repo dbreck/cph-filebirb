@@ -36,7 +36,7 @@ function FolderPicker( { anchor, count, current, onPick, onClose } ) {
 			depth: search.trim() ? 0 : row.depth,
 			color: row.node.color,
 		} ) );
-		const uncategorized = { id: UNCATEGORIZED, name: __( 'Uncategorized', 'cph-filebird' ), depth: 0, pinned: true };
+		const uncategorized = { id: UNCATEGORIZED, name: __( 'Uncategorized', 'cph-filebirb' ), depth: 0, pinned: true };
 		const showUnc = ! search.trim() || uncategorized.name.toLocaleLowerCase().includes( search.trim().toLocaleLowerCase() );
 		return showUnc ? [ uncategorized, ...rows ] : rows;
 	}, [ tree, sort, search ] );
@@ -128,7 +128,7 @@ function FolderPicker( { anchor, count, current, onPick, onClose } ) {
 
 	const title = sprintf(
 		/* translators: %s: number of files */
-		_n( 'Move %s file to', 'Move %s files to', count, 'cph-filebird' ),
+		_n( 'Move %s file to', 'Move %s files to', count, 'cph-filebirb' ),
 		count.toLocaleString()
 	);
 
@@ -149,8 +149,8 @@ function FolderPicker( { anchor, count, current, onPick, onClose } ) {
 				<input
 					type="search"
 					className="cphfb-search__input"
-					placeholder={ __( 'Search folders', 'cph-filebird' ) }
-					aria-label={ __( 'Search folders', 'cph-filebird' ) }
+					placeholder={ __( 'Search folders', 'cph-filebirb' ) }
+					aria-label={ __( 'Search folders', 'cph-filebirb' ) }
 					role="combobox"
 					aria-expanded="true"
 					aria-controls={ id + '-list' }
@@ -163,7 +163,7 @@ function FolderPicker( { anchor, count, current, onPick, onClose } ) {
 					} }
 				/>
 			</div>
-			<div ref={ listRef } id={ id + '-list' } className="cphfb-picker__list" role="listbox" aria-label={ __( 'Folders', 'cph-filebird' ) }>
+			<div ref={ listRef } id={ id + '-list' } className="cphfb-picker__list" role="listbox" aria-label={ __( 'Folders', 'cph-filebirb' ) }>
 				{ options.map( ( option, i ) => (
 					<div
 						key={ option.id }
@@ -182,10 +182,10 @@ function FolderPicker( { anchor, count, current, onPick, onClose } ) {
 					>
 						{ option.pinned ? <InboxIcon /> : <FolderIcon size={ 18 } color={ option.color } /> }
 						<span className="cphfb-row__name">{ option.name }</span>
-						{ option.id === current && <span className="cphfb-picker__here">{ __( 'Current', 'cph-filebird' ) }</span> }
+						{ option.id === current && <span className="cphfb-picker__here">{ __( 'Current', 'cph-filebirb' ) }</span> }
 					</div>
 				) ) }
-				{ ! options.length && <p className="cphfb-picker__empty">{ __( 'No folders found.', 'cph-filebird' ) }</p> }
+				{ ! options.length && <p className="cphfb-picker__empty">{ __( 'No folders found.', 'cph-filebirb' ) }</p> }
 			</div>
 		</div>
 	);

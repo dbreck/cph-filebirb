@@ -2,14 +2,14 @@
 /**
  * Folder model tests.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Tests;
+namespace CPH\FileBirb\Tests;
 
-use CPH\FileBird\Model\Folder;
+use CPH\FileBirb\Model\Folder;
 
 /**
  * CRUD, naming, tree, move, reorder, delete, duplicate, colors.

@@ -2,12 +2,12 @@
 /**
  * Shared REST permission callbacks and error mapping.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Rest;
+namespace CPH\FileBirb\Rest;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -19,7 +19,7 @@ final class Permissions {
 	/**
 	 * REST namespace.
 	 */
-	public const NAMESPACE = 'cph-filebird/v1';
+	public const NAMESPACE = 'cph-filebirb/v1';
 
 	/**
 	 * Model error code => HTTP status.
@@ -72,10 +72,10 @@ final class Permissions {
 	 */
 	private static function check( string $cap ): bool|\WP_Error {
 		if ( ! is_user_logged_in() ) {
-			return new \WP_Error( 'rest_not_logged_in', __( 'You must be logged in.', 'cph-filebird' ), array( 'status' => 401 ) );
+			return new \WP_Error( 'rest_not_logged_in', __( 'You must be logged in.', 'cph-filebirb' ), array( 'status' => 401 ) );
 		}
 		if ( ! current_user_can( $cap ) ) {
-			return new \WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to do that.', 'cph-filebird' ), array( 'status' => 403 ) );
+			return new \WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to do that.', 'cph-filebirb' ), array( 'status' => 403 ) );
 		}
 		return true;
 	}

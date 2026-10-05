@@ -2,14 +2,14 @@
 /**
  * Updater tests.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Tests;
+namespace CPH\FileBirb\Tests;
 
-use CPH\FileBird\Updater;
+use CPH\FileBirb\Updater;
 
 /**
  * GitHub release update checker wiring.
@@ -28,7 +28,7 @@ class UpdaterTest extends \WP_UnitTestCase {
 
 		$api = $checker->getVcsApi();
 		$this->assertInstanceOf( '\\YahnisElsts\\PluginUpdateChecker\\v5p7\\Vcs\\GitHubApi', $api );
-		$this->assertSame( 'https://github.com/dbreck/cph-filebird', untrailingslashit( $api->getRepositoryUrl() ) );
+		$this->assertSame( 'https://github.com/dbreck/cph-filebirb', untrailingslashit( $api->getRepositoryUrl() ) );
 	}
 
 	/**
@@ -61,7 +61,7 @@ class UpdaterTest extends \WP_UnitTestCase {
 	 */
 	public function test_main_file_declares_update_uri(): void {
 		$data = get_file_data( CPHFB_FILE, array( 'uri' => 'Update URI', 'version' => 'Version' ) );
-		$this->assertSame( 'https://github.com/dbreck/cph-filebird', $data['uri'] );
+		$this->assertSame( 'https://github.com/dbreck/cph-filebirb', $data['uri'] );
 		$this->assertSame( CPHFB_VERSION, $data['version'] );
 	}
 }

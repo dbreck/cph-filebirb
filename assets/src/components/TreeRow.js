@@ -43,7 +43,7 @@ function RenameField( { initial, onSubmit, onCancel } ) {
 				className={ 'cphfb-rename__input' + ( error ? ' has-error' : '' ) }
 				value={ value }
 				maxLength={ 250 }
-				aria-label={ __( 'Folder name', 'cph-filebird' ) }
+				aria-label={ __( 'Folder name', 'cph-filebirb' ) }
 				aria-invalid={ !! error }
 				aria-describedby={ error ? 'cphfb-rename-error' : undefined }
 				disabled={ busy }
@@ -127,7 +127,7 @@ function TreeRow( {
 
 	const label = sprintf(
 		/* translators: 1: folder name, 2: number of files */
-		_n( '%1$s, %2$s file', '%1$s, %2$s files', node.count, 'cph-filebird' ),
+		_n( '%1$s, %2$s file', '%1$s, %2$s files', node.count, 'cph-filebirb' ),
 		node.name,
 		formatCount( node.count )
 	);
@@ -205,7 +205,7 @@ function TreeRow( {
 					type="button"
 					tabIndex={ -1 }
 					className="cphfb-row__more"
-					aria-label={ sprintf( /* translators: %s: folder name */ __( 'Actions for %s', 'cph-filebird' ), node.name ) }
+					aria-label={ sprintf( /* translators: %s: folder name */ __( 'Actions for %s', 'cph-filebirb' ), node.name ) }
 					aria-haspopup="menu"
 					onPointerDown={ ( event ) => event.stopPropagation() }
 					onClick={ ( event ) => {

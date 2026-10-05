@@ -9,7 +9,7 @@
 	convertDeprecationsToExceptions="true"
 	>
 	<testsuites>
-		<testsuite name="cph-filebird">
+		<testsuite name="cph-filebirb">
 			<directory suffix="Test.php">./tests/</directory>
 		</testsuite>
 	</testsuites>

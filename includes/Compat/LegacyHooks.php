@@ -2,14 +2,14 @@
 /**
  * Legacy FileBird hook compatibility.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Compat;
+namespace CPH\FileBirb\Compat;
 
-use CPH\FileBird\Hooks;
+use CPH\FileBirb\Hooks;
 
 defined( 'ABSPATH' ) || exit;
 

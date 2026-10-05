@@ -7,15 +7,15 @@ import { __ } from '@wordpress/i18n';
 import { CheckIcon } from './icons';
 
 export const COLORS = [
-	{ value: '#d63638', name: __( 'Red', 'cph-filebird' ) },
-	{ value: '#e26f2a', name: __( 'Orange', 'cph-filebird' ) },
-	{ value: '#dba617', name: __( 'Yellow', 'cph-filebird' ) },
-	{ value: '#00a32a', name: __( 'Green', 'cph-filebird' ) },
-	{ value: '#1aa39a', name: __( 'Teal', 'cph-filebird' ) },
-	{ value: '#2271b1', name: __( 'Blue', 'cph-filebird' ) },
-	{ value: '#7a4fd6', name: __( 'Purple', 'cph-filebird' ) },
-	{ value: '#c43b8d', name: __( 'Pink', 'cph-filebird' ) },
-	{ value: '#646970', name: __( 'Gray', 'cph-filebird' ) },
+	{ value: '#d63638', name: __( 'Red', 'cph-filebirb' ) },
+	{ value: '#e26f2a', name: __( 'Orange', 'cph-filebirb' ) },
+	{ value: '#dba617', name: __( 'Yellow', 'cph-filebirb' ) },
+	{ value: '#00a32a', name: __( 'Green', 'cph-filebirb' ) },
+	{ value: '#1aa39a', name: __( 'Teal', 'cph-filebirb' ) },
+	{ value: '#2271b1', name: __( 'Blue', 'cph-filebirb' ) },
+	{ value: '#7a4fd6', name: __( 'Purple', 'cph-filebirb' ) },
+	{ value: '#c43b8d', name: __( 'Pink', 'cph-filebirb' ) },
+	{ value: '#646970', name: __( 'Gray', 'cph-filebirb' ) },
 ];
 
 /**
@@ -128,9 +128,9 @@ export default function Menu( { anchor, items, label, onClose } ) {
 				}
 				if ( item.type === 'colors' ) {
 					return (
-						<div key="colors" className="cphfb-menu__colors" role="group" aria-label={ __( 'Folder color', 'cph-filebird' ) }>
+						<div key="colors" className="cphfb-menu__colors" role="group" aria-label={ __( 'Folder color', 'cph-filebirb' ) }>
 							<span className="cphfb-menu__heading" aria-hidden="true">
-								{ __( 'Color', 'cph-filebird' ) }
+								{ __( 'Color', 'cph-filebirb' ) }
 							</span>
 							<div className="cphfb-menu__swatches">
 								{ COLORS.map( ( { value: color, name } ) => (
@@ -152,8 +152,8 @@ export default function Menu( { anchor, items, label, onClose } ) {
 									role="menuitemradio"
 									data-swatch="1"
 									aria-checked={ ! item.value }
-									aria-label={ __( 'No color', 'cph-filebird' ) }
-									title={ __( 'No color', 'cph-filebird' ) }
+									aria-label={ __( 'No color', 'cph-filebirb' ) }
+									title={ __( 'No color', 'cph-filebirb' ) }
 									className="cphfb-swatch cphfb-swatch--none"
 									onClick={ run( () => item.onSelect( '' ) ) }
 								/>

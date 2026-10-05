@@ -47,7 +47,7 @@ export function toast( message, { action, onAction, duration = 7000 } = {} ) {
 	const close = document.createElement( 'button' );
 	close.type = 'button';
 	close.className = 'cphfb-toast__close';
-	close.setAttribute( 'aria-label', __( 'Dismiss', 'cph-filebird' ) );
+	close.setAttribute( 'aria-label', __( 'Dismiss', 'cph-filebirb' ) );
 	close.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 10.94 17.47 5.47l1.06 1.06L13.06 12l5.47 5.47-1.06 1.06L12 13.06l-5.47 5.47-1.06-1.06L10.94 12 5.47 6.53l1.06-1.06z"/></svg>';
 	close.addEventListener( 'click', dismissToast );
 	el.appendChild( close );

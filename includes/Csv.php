@@ -2,15 +2,15 @@
 /**
  * CSV export / import, compatible with FileBird's format.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird;
+namespace CPH\FileBirb;
 
-use CPH\FileBird\Model\Assignment;
-use CPH\FileBird\Model\Folder;
+use CPH\FileBirb\Model\Assignment;
+use CPH\FileBirb\Model\Folder;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -113,7 +113,7 @@ final class Csv {
 		global $wpdb;
 
 		if ( strlen( $csv ) > self::max_bytes() ) {
-			return new \WP_Error( 'invalid_csv_size', __( 'That CSV file is too large.', 'cph-filebird' ), array( 'status' => 413 ) );
+			return new \WP_Error( 'invalid_csv_size', __( 'That CSV file is too large.', 'cph-filebirb' ), array( 'status' => 413 ) );
 		}
 
 		$csv    = preg_replace( '/^\xEF\xBB\xBF/', '', $csv );
@@ -243,6 +243,6 @@ final class Csv {
 	 * @return \WP_Error
 	 */
 	private function invalid(): \WP_Error {
-		return new \WP_Error( 'invalid_csv', __( 'This file is not a FileBird or CPH FileBirb folder export.', 'cph-filebird' ), array( 'status' => 400 ) );
+		return new \WP_Error( 'invalid_csv', __( 'This file is not a FileBird or CPH FileBirb folder export.', 'cph-filebirb' ), array( 'status' => 400 ) );
 	}
 }

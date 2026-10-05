@@ -3,6 +3,6 @@
 	"phpVersion": "8.1",
 	"plugins": [],
 	"mappings": {
-		"wp-content/plugins/cph-filebird": "."
+		"wp-content/plugins/cph-filebirb": "."
 	}
 }

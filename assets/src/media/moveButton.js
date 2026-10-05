@@ -23,7 +23,7 @@ export function addMoveButton( toolbar, selection, { priority = -10, visible = (
 		return null;
 	}
 	const button = new Button( {
-		text: __( 'Move to folder…', 'cph-filebird' ),
+		text: __( 'Move to folder…', 'cph-filebirb' ),
 		classes: [ 'cphfb-move-button' ],
 		priority,
 		click() {

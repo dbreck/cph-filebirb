@@ -2,15 +2,15 @@
 /**
  * Folder field on the attachment edit screens.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Admin;
+namespace CPH\FileBirb\Admin;
 
-use CPH\FileBird\Model\Assignment;
-use CPH\FileBird\Model\Folder;
+use CPH\FileBirb\Model\Assignment;
+use CPH\FileBirb\Model\Folder;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -75,7 +75,7 @@ final class AttachmentFields {
 
 		if ( current_user_can( 'edit_post', $id ) && current_user_can( 'upload_files' ) ) {
 			$html .= sprintf( '<select name="attachments[%1$s][%2$s]" id="attachments-%1$s-%2$s">', esc_attr( (string) $id ), esc_attr( self::FIELD ) );
-			$html .= sprintf( '<option value="0"%s>%s</option>', selected( 0, $current, false ), esc_html__( 'Uncategorized', 'cph-filebird' ) );
+			$html .= sprintf( '<option value="0"%s>%s</option>', selected( 0, $current, false ), esc_html__( 'Uncategorized', 'cph-filebirb' ) );
 			foreach ( $nodes as $node ) {
 				$html .= sprintf(
 					'<option value="%1$s"%2$s>%3$s</option>',
@@ -86,7 +86,7 @@ final class AttachmentFields {
 			}
 			$html .= '</select>';
 		} else {
-			$name = __( 'Uncategorized', 'cph-filebird' );
+			$name = __( 'Uncategorized', 'cph-filebirb' );
 			foreach ( $nodes as $node ) {
 				if ( $node['id'] === $current ) {
 					$name = $node['name'];
@@ -98,7 +98,7 @@ final class AttachmentFields {
 		$html .= '</div>';
 
 		$fields[ self::FIELD ] = array(
-			'label' => __( 'Folder', 'cph-filebird' ),
+			'label' => __( 'Folder', 'cph-filebirb' ),
 			'input' => 'html',
 			'html'  => $html,
 		);

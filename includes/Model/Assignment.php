@@ -2,14 +2,14 @@
 /**
  * Attachment ↔ folder assignments over `{prefix}fbv_attachment_folder`.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Model;
+namespace CPH\FileBirb\Model;
 
-use CPH\FileBird\Hooks;
+use CPH\FileBirb\Hooks;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -68,7 +68,7 @@ final class Assignment {
 		global $wpdb;
 
 		if ( $folder_id < 0 || ( $folder_id > 0 && ! Folder::get_instance()->exists( $folder_id ) ) ) {
-			return new \WP_Error( 'folder_not_found', __( 'Folder not found.', 'cph-filebird' ), array( 'status' => 404 ) );
+			return new \WP_Error( 'folder_not_found', __( 'Folder not found.', 'cph-filebirb' ), array( 'status' => 404 ) );
 		}
 
 		$ids = $this->clean_ids( $attachment_ids );

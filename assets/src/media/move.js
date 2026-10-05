@@ -76,7 +76,7 @@ export function filterLibrary( library ) {
 }
 
 const label = ( id ) =>
-	id === UNCATEGORIZED ? __( 'Uncategorized', 'cph-filebird' ) : store.folderLabel( id );
+	id === UNCATEGORIZED ? __( 'Uncategorized', 'cph-filebirb' ) : store.folderLabel( id );
 
 /**
  * Move attachments to a folder (0 = unassign).
@@ -99,7 +99,7 @@ export async function moveAttachments( folder, ids, { undo = true } = {} ) {
 		speak(
 			sprintf(
 				/* translators: %s: folder name */
-				_n( 'The file is already in %s.', 'The files are already in %s.', ids.length, 'cph-filebird' ),
+				_n( 'The file is already in %s.', 'The files are already in %s.', ids.length, 'cph-filebirb' ),
 				label( folder )
 			)
 		);
@@ -120,7 +120,7 @@ export async function moveAttachments( folder, ids, { undo = true } = {} ) {
 
 	const message = sprintf(
 		/* translators: 1: number of files, 2: folder name */
-		_n( 'Moved %1$s file to %2$s.', 'Moved %1$s files to %2$s.', moving.length, 'cph-filebird' ),
+		_n( 'Moved %1$s file to %2$s.', 'Moved %1$s files to %2$s.', moving.length, 'cph-filebirb' ),
 		moving.length.toLocaleString(),
 		label( folder )
 	);
@@ -129,7 +129,7 @@ export async function moveAttachments( folder, ids, { undo = true } = {} ) {
 	const restorable = moving.filter( ( id ) => ! Number.isNaN( before.get( id ) ) );
 	if ( undo && restorable.length ) {
 		toast( message, {
-			action: __( 'Undo', 'cph-filebird' ),
+			action: __( 'Undo', 'cph-filebirb' ),
 			onAction: () => undoMove( restorable, before ),
 		} );
 	}
@@ -148,7 +148,7 @@ async function undoMove( ids, before ) {
 		await store.assignToFolder( folder, group );
 	}
 	store.emit( 'move', { folder: null, ids, before: null } );
-	speak( __( 'Move undone.', 'cph-filebird' ) );
+	speak( __( 'Move undone.', 'cph-filebirb' ) );
 }
 
 /**

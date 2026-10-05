@@ -2,19 +2,19 @@
 /**
  * Admin script and style loading for the folder sidebar.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Admin;
+namespace CPH\FileBirb\Admin;
 
-use CPH\FileBird\Model\Assignment;
-use CPH\FileBird\Model\Folder;
-use CPH\FileBird\Model\Settings;
-use CPH\FileBird\Model\UserSettings;
-use CPH\FileBird\Query;
-use CPH\FileBird\Rest\Permissions;
+use CPH\FileBirb\Model\Assignment;
+use CPH\FileBirb\Model\Folder;
+use CPH\FileBirb\Model\Settings;
+use CPH\FileBirb\Model\UserSettings;
+use CPH\FileBirb\Query;
+use CPH\FileBirb\Rest\Permissions;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -130,7 +130,7 @@ final class Assets {
 		$version = (string) ( $asset['version'] ?? CPHFB_VERSION );
 
 		wp_enqueue_script( self::HANDLE, CPHFB_URL . 'assets/build/index.js', array_unique( $deps ), $version, true );
-		wp_set_script_translations( self::HANDLE, 'cph-filebird', CPHFB_PATH . 'languages' );
+		wp_set_script_translations( self::HANDLE, 'cph-filebirb', CPHFB_PATH . 'languages' );
 		wp_add_inline_script( self::HANDLE, 'window.cphfbData = ' . wp_json_encode( $this->data( $mode ) ) . ';', 'before' );
 
 		if ( is_readable( CPHFB_PATH . 'assets/build/index.css' ) ) {

@@ -6,4 +6,4 @@ cd "$(dirname "$0")/.." || exit 1
 LOCK=.phpunit.lock
 while ! mkdir "$LOCK" 2>/dev/null; do sleep 2; done
 trap 'rmdir "$LOCK"' EXIT
-npx wp-env run tests-cli --env-cwd=wp-content/plugins/cph-filebird vendor/bin/phpunit "$@"
+npx wp-env run tests-cli --env-cwd=wp-content/plugins/cph-filebirb vendor/bin/phpunit "$@"

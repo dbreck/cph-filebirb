@@ -39,7 +39,7 @@ function bindUploader( up, getContext ) {
 
 function fillOptions( select ) {
 	const { tree, sort } = store.getState();
-	const options = [ [ UNCATEGORIZED, __( 'Uncategorized (no folder)', 'cph-filebird' ) ] ];
+	const options = [ [ UNCATEGORIZED, __( 'Uncategorized (no folder)', 'cph-filebirb' ) ] ];
 	flatten( sortTree( tree, sort ), new Set(), true ).forEach( ( row ) => {
 		options.push( [ row.node.id, '   '.repeat( row.depth ) + row.node.name ] );
 	} );
@@ -80,7 +80,7 @@ export function renderPicker( holder, scope = null ) {
 	const label = document.createElement( 'label' );
 	label.htmlFor = id;
 	label.className = 'cphfb-upload-folder__label';
-	label.textContent = __( 'Upload to:', 'cph-filebird' );
+	label.textContent = __( 'Upload to:', 'cph-filebirb' );
 
 	const select = document.createElement( 'select' );
 	select.id = id;

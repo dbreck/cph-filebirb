@@ -2,17 +2,17 @@
 /**
  * WP-CLI root command: `wp cphfb`.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Cli;
+namespace CPH\FileBirb\Cli;
 
-use CPH\FileBird\Csv;
-use CPH\FileBird\Install;
-use CPH\FileBird\Model\Assignment;
-use CPH\FileBird\Model\Folder;
+use CPH\FileBirb\Csv;
+use CPH\FileBirb\Install;
+use CPH\FileBirb\Model\Assignment;
+use CPH\FileBirb\Model\Folder;
 use WP_CLI;
 use WP_CLI\Utils;
 

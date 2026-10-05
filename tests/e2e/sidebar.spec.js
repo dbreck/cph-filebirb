@@ -1,7 +1,7 @@
 /**
  * Folder sidebar on upload.php (grid and list mode).
  *
- * Needs wp-env running with cph-filebird active and a few attachments.
+ * Needs wp-env running with cph-filebirb active and a few attachments.
  * Set CPHFB_SHOTS=/some/dir to save screenshots for design review.
  */
 const { test, expect } = require( '@playwright/test' );
@@ -426,7 +426,7 @@ test( 'core grid features still work: uploader, upload, bulk select, details mod
 		'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
 		'base64'
 	);
-	const countsRequest = page.waitForRequest( ( r ) => /cph-filebird(\/|%2F)v1(\/|%2F)counts/.test( r.url() ), { timeout: 15000 } );
+	const countsRequest = page.waitForRequest( ( r ) => /cph-filebirb(\/|%2F)v1(\/|%2F)counts/.test( r.url() ), { timeout: 15000 } );
 	await page.locator( '.uploader-inline input[type="file"], .moxie-shim input[type="file"]' ).first().setInputFiles( {
 		name: 'cphfb-e2e.png',
 		mimeType: 'image/png',

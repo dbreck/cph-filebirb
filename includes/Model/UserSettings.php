@@ -2,14 +2,14 @@
 /**
  * Per-user settings (user meta `cphfb_user_settings`).
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Model;
+namespace CPH\FileBirb\Model;
 
-use CPH\FileBird\Hooks;
+use CPH\FileBirb\Hooks;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -99,7 +99,7 @@ final class UserSettings {
 	 */
 	public function set( string $key, $value, ?int $user_id = null ): bool|\WP_Error {
 		if ( ! array_key_exists( $key, self::DEFAULTS ) ) {
-			return new \WP_Error( 'invalid_setting', __( 'Unknown setting.', 'cph-filebird' ) );
+			return new \WP_Error( 'invalid_setting', __( 'Unknown setting.', 'cph-filebirb' ) );
 		}
 		$this->update( array( $key => $value ), $user_id );
 		return true;

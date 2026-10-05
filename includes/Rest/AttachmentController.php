@@ -2,15 +2,15 @@
 /**
  * REST: assignment, per-attachment folder lookup, counts.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Rest;
+namespace CPH\FileBirb\Rest;
 
-use CPH\FileBird\Model\Assignment;
-use CPH\FileBird\Model\Folder;
+use CPH\FileBirb\Model\Assignment;
+use CPH\FileBirb\Model\Folder;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -127,7 +127,7 @@ final class AttachmentController {
 		}
 		$ids = array_values( $ids );
 		if ( empty( $ids ) ) {
-			return new \WP_Error( 'nothing_to_move', __( 'None of those files can be moved.', 'cph-filebird' ), array( 'status' => 400 ) );
+			return new \WP_Error( 'nothing_to_move', __( 'None of those files can be moved.', 'cph-filebirb' ), array( 'status' => 400 ) );
 		}
 
 		$assignments = Assignment::get_instance();
@@ -154,7 +154,7 @@ final class AttachmentController {
 	public function folder_of( \WP_REST_Request $request ): \WP_REST_Response|\WP_Error {
 		$id = (int) $request['id'];
 		if ( 'attachment' !== get_post_type( $id ) ) {
-			return new \WP_Error( 'attachment_not_found', __( 'Attachment not found.', 'cph-filebird' ), array( 'status' => 404 ) );
+			return new \WP_Error( 'attachment_not_found', __( 'Attachment not found.', 'cph-filebirb' ), array( 'status' => 404 ) );
 		}
 		$folder_id = Assignment::get_instance()->get_folder_id( $id );
 		$row       = $folder_id > 0 ? Folder::get_instance()->get( $folder_id ) : null;

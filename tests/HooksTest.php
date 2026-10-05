@@ -2,14 +2,14 @@
 /**
  * Hook dual-firing tests.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Tests;
+namespace CPH\FileBirb\Tests;
 
-use CPH\FileBird\Hooks;
+use CPH\FileBirb\Hooks;
 
 /**
  * Every mutation fires cphfb_* first, then the fbv_* twin with identical args.

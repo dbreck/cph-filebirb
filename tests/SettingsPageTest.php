@@ -2,15 +2,15 @@
 /**
  * Admin\SettingsPage tests.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Tests;
+namespace CPH\FileBirb\Tests;
 
-use CPH\FileBird\Admin\SettingsPage;
-use CPH\FileBird\Model\Settings;
+use CPH\FileBirb\Admin\SettingsPage;
+use CPH\FileBirb\Model\Settings;
 
 /**
  * Sanitiser, rendering, action links, permission guard.

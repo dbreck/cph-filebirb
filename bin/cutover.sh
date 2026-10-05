@@ -9,9 +9,9 @@
 #                 --wp "wplocal mysite"               (Local WP; the zsh wplocal function)
 #                 --wp "npx wp-env run cli wp"        (wp-env dev site)
 #                 --wp "wp --path=/var/www/html"      (plain)
-# --zip         Plugin zip to install (default dist/cph-filebird.zip). WP-CLI reads this
+# --zip         Plugin zip to install (default dist/cph-filebirb.zip). WP-CLI reads this
 #               path on the *site's* host, so for --ssh pass a URL the server can download.
-#               If the site's cph-filebird folder is a symlink or a dev checkout, the
+#               If the site's cph-filebirb folder is a symlink or a dev checkout, the
 #               install is skipped and the existing copy is activated instead.
 # --backup-dir  Local directory for the table backup (default ./cutover-backups).
 #               Backups are always written on this machine, never on the remote host
@@ -19,19 +19,19 @@
 # --dry-run     Read-only: run the checks and counts, print every write it would do.
 #
 # Steps: pre-check tables, record folder/assignment counts from SQL, export both tables
-# locally, deactivate filebird-pro/filebird, install (--force) and activate cph-filebird,
+# locally, deactivate filebird-pro/filebird, install (--force) and activate cph-filebirb,
 # run `wp cphfb verify`, compare counts. Any failure after the swap rolls back
-# (deactivate cph-filebird, reactivate FileBird) and exits non-zero.
+# (deactivate cph-filebirb, reactivate FileBird) and exits non-zero.
 # FileBird's plugin files are never deleted. Sites without FileBird are supported: the
 # deactivate step is skipped and the counts and verify still run.
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 WP_PREFIX=""
-ZIP="$ROOT/dist/cph-filebird.zip"
+ZIP="$ROOT/dist/cph-filebirb.zip"
 BACKUP_DIR="$PWD/cutover-backups"
 DRY_RUN=0
-SLUG="cph-filebird"
+SLUG="cph-filebirb"
 
 while [ $# -gt 0 ]; do
 	case "$1" in
@@ -164,9 +164,9 @@ fi
 
 # Never overwrite a symlinked or dev-checkout copy (Local sites link to the dev source;
 # wp-env mounts the repo).
-DEV_COPY="$(wp_run eval '$d = WP_PLUGIN_DIR . "/cph-filebird"; echo ( is_link( $d ) || file_exists( $d . "/composer.json" ) ) ? "yes" : "no";' --skip-plugins --skip-themes 2>/dev/null | tr -d '\r' | grep -v '^$' | tail -n 1)"
+DEV_COPY="$(wp_run eval '$d = WP_PLUGIN_DIR . "/cph-filebirb"; echo ( is_link( $d ) || file_exists( $d . "/composer.json" ) ) ? "yes" : "no";' --skip-plugins --skip-themes 2>/dev/null | tr -d '\r' | grep -v '^$' | tail -n 1)"
 if [ "$DEV_COPY" = "yes" ]; then
-	log "cph-filebird is a symlink or dev checkout on this site; skipping install, activating it."
+	log "cph-filebirb is a symlink or dev checkout on this site; skipping install, activating it."
 else
 	case "$ZIP" in
 		http://*|https://*) ;;
@@ -181,7 +181,7 @@ wp_write plugin activate "$SLUG" ${NETWORK_FLAG[@]+"${NETWORK_FLAG[@]}"} || roll
 
 if [ "$DRY_RUN" -eq 1 ]; then
 	if wp_run plugin is-active "$SLUG" >/dev/null 2>&1; then
-		log "cph-filebird is already active; running verify read-only."
+		log "cph-filebirb is already active; running verify read-only."
 		wp_run cphfb verify || warn "verify reported a problem."
 	else
 		printf '    [dry-run] would run: %s cphfb verify\n' "$WP_PREFIX"

@@ -57,9 +57,9 @@ const useStore = () => useSyncExternalStore( store.subscribe, store.getState );
 const noSelection = { subscribe: () => () => {}, getCount: () => 0 };
 
 const SORTS = () => [
-	{ key: 'custom', label: __( 'Custom order', 'cph-filebird' ) },
-	{ key: 'name-asc', label: __( 'Name A → Z', 'cph-filebird' ) },
-	{ key: 'name-desc', label: __( 'Name Z → A', 'cph-filebird' ) },
+	{ key: 'custom', label: __( 'Custom order', 'cph-filebirb' ) },
+	{ key: 'name-asc', label: __( 'Name A → Z', 'cph-filebirb' ) },
+	{ key: 'name-desc', label: __( 'Name Z → A', 'cph-filebirb' ) },
 ];
 
 function PinnedRow( { id, label, count, icon, selected, focused, domId, onSelect, onFocusRow, posinset } ) {
@@ -80,7 +80,7 @@ function PinnedRow( { id, label, count, icon, selected, focused, domId, onSelect
 			aria-selected={ selected }
 			aria-label={ sprintf(
 				/* translators: 1: label, 2: number of files */
-				_n( '%1$s, %2$s file', '%1$s, %2$s files', count || 0, 'cph-filebird' ),
+				_n( '%1$s, %2$s file', '%1$s, %2$s files', count || 0, 'cph-filebirb' ),
 				label,
 				( count || 0 ).toLocaleString()
 			) }
@@ -399,7 +399,7 @@ export default function Sidebar( {
 								key: 'move-here',
 								label: sprintf(
 									/* translators: %s: number of selected files */
-									_n( 'Move %s selected file here', 'Move %s selected files here', selectionCount, 'cph-filebird' ),
+									_n( 'Move %s selected file here', 'Move %s selected files here', selectionCount, 'cph-filebirb' ),
 									selectionCount.toLocaleString()
 								),
 								onSelect: () => selectionSource.moveTo( menuNode.id ),
@@ -407,13 +407,13 @@ export default function Sidebar( {
 							{ type: 'separator' },
 					  ]
 					: [] ),
-				{ key: 'new', label: __( 'New subfolder', 'cph-filebird' ), onSelect: () => newFolder( menuNode.id ) },
-				{ key: 'rename', label: __( 'Rename', 'cph-filebird' ), shortcut: 'F2', onSelect: () => startRename( menuNode.id ) },
-				{ key: 'duplicate', label: __( 'Duplicate', 'cph-filebird' ), onSelect: () => store.duplicateFolder( menuNode.id ) },
+				{ key: 'new', label: __( 'New subfolder', 'cph-filebirb' ), onSelect: () => newFolder( menuNode.id ) },
+				{ key: 'rename', label: __( 'Rename', 'cph-filebirb' ), shortcut: 'F2', onSelect: () => startRename( menuNode.id ) },
+				{ key: 'duplicate', label: __( 'Duplicate', 'cph-filebirb' ), onSelect: () => store.duplicateFolder( menuNode.id ) },
 				{ type: 'separator' },
 				{ type: 'colors', value: menuNode.color, onSelect: ( color ) => store.setColor( menuNode.id, color ) },
 				{ type: 'separator' },
-				{ key: 'delete', label: __( 'Delete…', 'cph-filebird' ), danger: true, shortcut: 'Del', onSelect: () => setDeleting( menuNode.id ) },
+				{ key: 'delete', label: __( 'Delete…', 'cph-filebirb' ), danger: true, shortcut: 'Del', onSelect: () => setDeleting( menuNode.id ) },
 		  ]
 		: [];
 
@@ -431,7 +431,7 @@ export default function Sidebar( {
 		} );
 	const moveLabel = sprintf(
 		/* translators: %s: number of selected files */
-		_n( 'Move %s selected file to a folder', 'Move %s selected files to a folder', selectionCount, 'cph-filebird' ),
+		_n( 'Move %s selected file to a folder', 'Move %s selected files to a folder', selectionCount, 'cph-filebirb' ),
 		selectionCount.toLocaleString()
 	);
 
@@ -447,8 +447,8 @@ export default function Sidebar( {
 				<button
 					type="button"
 					className="cphfb-icon-button"
-					aria-label={ __( 'Show folders', 'cph-filebird' ) }
-					title={ __( 'Show folders', 'cph-filebird' ) }
+					aria-label={ __( 'Show folders', 'cph-filebirb' ) }
+					title={ __( 'Show folders', 'cph-filebirb' ) }
 					aria-expanded="false"
 					onClick={ toggleRail }
 				>
@@ -484,7 +484,7 @@ export default function Sidebar( {
 		<div className="cphfb-sidebar">
 			<div className="cphfb-header">
 				<h2 className="cphfb-header__title" id={ uid + '-title' }>
-					{ __( 'Folders', 'cph-filebird' ) }
+					{ __( 'Folders', 'cph-filebirb' ) }
 				</h2>
 				<div className="cphfb-header__actions">
 					{ canManage && (
@@ -494,20 +494,20 @@ export default function Sidebar( {
 							onClick={ () => newFolder( parentForNew ) }
 							title={
 								parentForNew
-									? sprintf( /* translators: %s: folder name */ __( 'New folder inside %s', 'cph-filebird' ), store.folderLabel( parentForNew ) )
-									: __( 'New folder', 'cph-filebird' )
+									? sprintf( /* translators: %s: folder name */ __( 'New folder inside %s', 'cph-filebirb' ), store.folderLabel( parentForNew ) )
+									: __( 'New folder', 'cph-filebirb' )
 							}
 						>
 							<PlusIcon />
-							<span>{ __( 'New folder', 'cph-filebird' ) }</span>
+							<span>{ __( 'New folder', 'cph-filebirb' ) }</span>
 						</button>
 					) }
 					{ ( layout || collapsible ) && (
 						<button
 							type="button"
 							className="cphfb-icon-button"
-							aria-label={ __( 'Hide folders', 'cph-filebird' ) }
-							title={ __( 'Hide folders', 'cph-filebird' ) }
+							aria-label={ __( 'Hide folders', 'cph-filebirb' ) }
+							title={ __( 'Hide folders', 'cph-filebirb' ) }
 							aria-expanded="true"
 							onClick={ toggleRail }
 						>
@@ -523,8 +523,8 @@ export default function Sidebar( {
 					<input
 						type="search"
 						className="cphfb-search__input"
-						placeholder={ __( 'Search folders', 'cph-filebird' ) }
-						aria-label={ __( 'Search folders', 'cph-filebird' ) }
+						placeholder={ __( 'Search folders', 'cph-filebirb' ) }
+						aria-label={ __( 'Search folders', 'cph-filebirb' ) }
 						value={ search }
 						onChange={ ( event ) => setSearch( event.target.value ) }
 						onKeyDown={ ( event ) => {
@@ -542,7 +542,7 @@ export default function Sidebar( {
 						<button
 							type="button"
 							className="cphfb-search__clear"
-							aria-label={ __( 'Clear search', 'cph-filebird' ) }
+							aria-label={ __( 'Clear search', 'cph-filebirb' ) }
 							onClick={ () => setSearch( '' ) }
 						>
 							<CloseIcon />
@@ -552,8 +552,8 @@ export default function Sidebar( {
 				<button
 					type="button"
 					className={ 'cphfb-icon-button' + ( sort !== 'custom' ? ' is-active' : '' ) }
-					aria-label={ __( 'Sort folders', 'cph-filebird' ) }
-					title={ __( 'Sort folders', 'cph-filebird' ) }
+					aria-label={ __( 'Sort folders', 'cph-filebirb' ) }
+					title={ __( 'Sort folders', 'cph-filebirb' ) }
 					aria-haspopup="menu"
 					aria-expanded={ !! sortMenu }
 					onClick={ ( event ) => {
@@ -588,7 +588,7 @@ export default function Sidebar( {
 							id={ ALL }
 							posinset={ 1 }
 							domId={ domId( ALL ) }
-							label={ __( 'All files', 'cph-filebird' ) }
+							label={ __( 'All files', 'cph-filebirb' ) }
 							count={ counts?.all }
 							icon={ <AllIcon /> }
 							selected={ selected === ALL }
@@ -600,7 +600,7 @@ export default function Sidebar( {
 							id={ UNCATEGORIZED }
 							posinset={ 2 }
 							domId={ domId( UNCATEGORIZED ) }
-							label={ __( 'Uncategorized', 'cph-filebird' ) }
+							label={ __( 'Uncategorized', 'cph-filebirb' ) }
 							count={ counts?.uncategorized }
 							icon={ <InboxIcon /> }
 							selected={ selected === UNCATEGORIZED }
@@ -635,17 +635,17 @@ export default function Sidebar( {
 					</div>
 					{ treeEmpty && (
 						<div className="cphfb-empty" role="none">
-							<p>{ __( 'No folders yet.', 'cph-filebird' ) }</p>
+							<p>{ __( 'No folders yet.', 'cph-filebirb' ) }</p>
 							{ canManage && (
 								<button type="button" className="button" onClick={ () => newFolder( 0 ) }>
-									{ __( 'Create your first folder', 'cph-filebird' ) }
+									{ __( 'Create your first folder', 'cph-filebirb' ) }
 								</button>
 							) }
 						</div>
 					) }
 					{ noMatches && (
 						<div className="cphfb-empty" role="none">
-							<p>{ sprintf( /* translators: %s: search term */ __( 'No folders match “%s”.', 'cph-filebird' ), search.trim() ) }</p>
+							<p>{ sprintf( /* translators: %s: search term */ __( 'No folders match “%s”.', 'cph-filebirb' ), search.trim() ) }</p>
 						</div>
 					) }
 				</div>
@@ -660,14 +660,14 @@ export default function Sidebar( {
 			</DndContext>
 
 			{ sort !== 'custom' && canManage && (
-				<p className="cphfb-hint">{ __( 'Sorted by name. Switch to custom order to rearrange folders.', 'cph-filebird' ) }</p>
+				<p className="cphfb-hint">{ __( 'Sorted by name. Switch to custom order to rearrange folders.', 'cph-filebirb' ) }</p>
 			) }
 
 			<div className="cphfb-notice-region" aria-live="polite">
 				{ notice && (
 					<div className={ 'cphfb-notice is-' + notice.type }>
 						<span>{ notice.message }</span>
-						<button type="button" aria-label={ __( 'Dismiss', 'cph-filebird' ) } onClick={ () => store.notify( null ) }>
+						<button type="button" aria-label={ __( 'Dismiss', 'cph-filebirb' ) } onClick={ () => store.notify( null ) }>
 							<CloseIcon />
 						</button>
 					</div>
@@ -679,7 +679,7 @@ export default function Sidebar( {
 					<span className="cphfb-selection-bar__count">
 						{ sprintf(
 							/* translators: %s: number of selected files */
-							_n( '%s selected', '%s selected', selectionCount, 'cph-filebird' ),
+							_n( '%s selected', '%s selected', selectionCount, 'cph-filebirb' ),
 							selectionCount.toLocaleString()
 						) }
 					</span>
@@ -691,7 +691,7 @@ export default function Sidebar( {
 						aria-expanded="false"
 						onClick={ openMovePicker }
 					>
-						{ __( 'Move to folder…', 'cph-filebird' ) }
+						{ __( 'Move to folder…', 'cph-filebirb' ) }
 					</button>
 				</div>
 			) }
@@ -702,14 +702,14 @@ export default function Sidebar( {
 				<Menu
 					anchor={ menu.anchor }
 					items={ menuItems }
-					label={ sprintf( /* translators: %s: folder name */ __( 'Actions for %s', 'cph-filebird' ), menuNode.name ) }
+					label={ sprintf( /* translators: %s: folder name */ __( 'Actions for %s', 'cph-filebirb' ), menuNode.name ) }
 					onClose={ closeMenu }
 				/>
 			) }
 			{ sortMenu && (
 				<Menu
 					anchor={ sortMenu }
-					label={ __( 'Sort folders', 'cph-filebird' ) }
+					label={ __( 'Sort folders', 'cph-filebirb' ) }
 					items={ SORTS().map( ( s ) => ( {
 						...s,
 						checked: sort === s.key,

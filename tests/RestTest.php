@@ -2,17 +2,17 @@
 /**
  * REST controller integration tests.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Tests;
+namespace CPH\FileBirb\Tests;
 
-use CPH\FileBird\Model\Settings;
+use CPH\FileBirb\Model\Settings;
 
 /**
- * Every `cph-filebird/v1` route: shapes, permissions, validation.
+ * Every `cph-filebirb/v1` route: shapes, permissions, validation.
  */
 class RestTest extends TestCase {
 
@@ -50,7 +50,7 @@ class RestTest extends TestCase {
 	 * Dispatch a request.
 	 */
 	private function call( string $method, string $route, array $params = array() ): \WP_REST_Response {
-		$request = new \WP_REST_Request( $method, '/cph-filebird/v1' . $route );
+		$request = new \WP_REST_Request( $method, '/cph-filebirb/v1' . $route );
 		if ( 'GET' === $method || 'DELETE' === $method ) {
 			$request->set_query_params( $params );
 		} else {
@@ -68,9 +68,9 @@ class RestTest extends TestCase {
 	}
 
 	public function test_routes_registered(): void {
-		$routes = rest_get_server()->get_routes( 'cph-filebird/v1' );
+		$routes = rest_get_server()->get_routes( 'cph-filebirb/v1' );
 		foreach ( array( '/folders', '/folders/order', '/folders/(?P<id>\d+)', '/folders/(?P<id>\d+)/duplicate', '/assign', '/attachments/(?P<id>\d+)/folder', '/counts', '/settings', '/user-settings', '/export.csv', '/import.csv' ) as $route ) {
-			$this->assertArrayHasKey( '/cph-filebird/v1' . $route, $routes, $route );
+			$this->assertArrayHasKey( '/cph-filebirb/v1' . $route, $routes, $route );
 		}
 	}
 
@@ -348,14 +348,14 @@ class RestTest extends TestCase {
 		$headers = $res->get_headers();
 		$this->assertSame( 200, $res->get_status() );
 		$this->assertSame( 'text/csv; charset=utf-8', $headers['Content-Type'] );
-		$this->assertSame( 'attachment; filename="cph-filebird-folders-' . gmdate( 'Y-m-d' ) . '.csv"', $headers['Content-Disposition'] );
+		$this->assertSame( 'attachment; filename="cph-filebirb-folders-' . gmdate( 'Y-m-d' ) . '.csv"', $headers['Content-Disposition'] );
 		$this->assertIsString( $res->get_data() );
 		$this->assertStringStartsWith( 'id,name,parent', $res->get_data() );
 		$this->assertStringContainsString( (string) $ids[0], $res->get_data() );
 	}
 
 	public function test_export_served_raw(): void {
-		$request = new \WP_REST_Request( 'GET', '/cph-filebird/v1/export.csv' );
+		$request = new \WP_REST_Request( 'GET', '/cph-filebirb/v1/export.csv' );
 		$result  = rest_do_request( $request );
 		ob_start();
 		$served = apply_filters( 'rest_pre_serve_request', false, $result, $request, rest_get_server() );

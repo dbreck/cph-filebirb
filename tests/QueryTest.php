@@ -2,15 +2,15 @@
 /**
  * Query tests.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Tests;
+namespace CPH\FileBirb\Tests;
 
-use CPH\FileBird\Model\Settings;
-use CPH\FileBird\Query;
+use CPH\FileBirb\Model\Settings;
+use CPH\FileBirb\Query;
 
 /**
  * Folder filtering through WP_Query, ajax args, REST and the JS model.

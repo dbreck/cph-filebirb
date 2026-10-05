@@ -25,7 +25,7 @@ async function login( page ) {
 
 /**
  * REST call from the page (cookie + nonce). `path` starting with `/wp/` goes to
- * core routes, anything else to cph-filebird/v1.
+ * core routes, anything else to cph-filebirb/v1.
  */
 async function rest( page, method, path, body ) {
 	return page.evaluate(

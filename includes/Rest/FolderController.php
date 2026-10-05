@@ -2,15 +2,15 @@
 /**
  * REST: folder tree CRUD and ordering.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Rest;
+namespace CPH\FileBirb\Rest;
 
-use CPH\FileBird\Model\Assignment;
-use CPH\FileBird\Model\Folder;
+use CPH\FileBirb\Model\Assignment;
+use CPH\FileBirb\Model\Folder;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -208,7 +208,7 @@ final class FolderController {
 		if ( is_string( $value ) && ( '' === $value || sanitize_hex_color( $value ) ) ) {
 			return true;
 		}
-		return new \WP_Error( 'invalid_color', __( 'Color must be a hex value like #ff0000.', 'cph-filebird' ), array( 'status' => 400 ) );
+		return new \WP_Error( 'invalid_color', __( 'Color must be a hex value like #ff0000.', 'cph-filebirb' ), array( 'status' => 400 ) );
 	}
 
 	/**
@@ -265,7 +265,7 @@ final class FolderController {
 		$id     = (int) $request['id'];
 		$folder = $model->get( $id );
 		if ( ! $folder ) {
-			return Permissions::error( new \WP_Error( 'folder_not_found', __( 'Folder not found.', 'cph-filebird' ) ) );
+			return Permissions::error( new \WP_Error( 'folder_not_found', __( 'Folder not found.', 'cph-filebirb' ) ) );
 		}
 
 		if ( $request->has_param( 'name' ) ) {

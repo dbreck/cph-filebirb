@@ -2,16 +2,16 @@
 /**
  * Upload routing tests.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Tests;
+namespace CPH\FileBirb\Tests;
 
-use CPH\FileBird\Model\Assignment;
-use CPH\FileBird\Model\UserSettings;
-use CPH\FileBird\Upload;
+use CPH\FileBirb\Model\Assignment;
+use CPH\FileBirb\Model\UserSettings;
+use CPH\FileBirb\Upload;
 
 /**
  * Routing precedence, path-form auto-create, delete cleanup, edited-image inheritance.

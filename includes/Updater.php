@@ -2,19 +2,19 @@
 /**
  * Self-hosted updates from GitHub releases.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird;
+namespace CPH\FileBirb;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Wires Plugin Update Checker to the plugin's GitHub releases.
  *
- * Each release must carry an asset named `cph-filebird.zip`. No licence keys,
+ * Each release must carry an asset named `cph-filebirb.zip`. No licence keys,
  * no other remote calls. Define `CPHFB_DISABLE_UPDATES` as true to switch off,
  * and `CPHFB_GITHUB_TOKEN` to read a private repository.
  */
@@ -23,17 +23,17 @@ final class Updater {
 	/**
 	 * Default repository URL.
 	 */
-	public const REPO_URL = 'https://github.com/dbreck/cph-filebird/';
+	public const REPO_URL = 'https://github.com/dbreck/cph-filebirb/';
 
 	/**
 	 * Plugin slug used by the update checker.
 	 */
-	public const SLUG = 'cph-filebird';
+	public const SLUG = 'cph-filebirb';
 
 	/**
 	 * Name of the release asset that holds the installable zip.
 	 */
-	public const ASSET_NAME = 'cph-filebird.zip';
+	public const ASSET_NAME = 'cph-filebirb.zip';
 
 	/**
 	 * Fully qualified factory class from Plugin Update Checker v5.

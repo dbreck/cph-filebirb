@@ -1,5 +1,5 @@
 {
-	"name": "clearph/cph-filebird",
+	"name": "clearph/cph-filebirb",
 	"description": "Media library folders for WordPress. Data-compatible with FileBird.",
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
@@ -17,7 +17,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"CPH\\FileBird\\": "includes/"
+			"CPH\\FileBirb\\": "includes/"
 		}
 	},
 	"config": {

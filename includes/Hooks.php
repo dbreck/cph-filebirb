@@ -2,12 +2,12 @@
 /**
  * Dual-fire hook helper: `cphfb_*` first, then the legacy FileBird twin.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird;
+namespace CPH\FileBirb;
 
 defined( 'ABSPATH' ) || exit;
 

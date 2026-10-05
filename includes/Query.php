@@ -2,16 +2,16 @@
 /**
  * Folder filtering for attachment queries (grid, list, REST) and the JS attachment model.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird;
+namespace CPH\FileBirb;
 
-use CPH\FileBird\Model\Assignment;
-use CPH\FileBird\Model\Folder;
-use CPH\FileBird\Model\Settings;
+use CPH\FileBirb\Model\Assignment;
+use CPH\FileBirb\Model\Folder;
+use CPH\FileBirb\Model\Settings;
 
 defined( 'ABSPATH' ) || exit;
 

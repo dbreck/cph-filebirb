@@ -2,15 +2,15 @@
 /**
  * Folder model over FileBird's `{prefix}fbv` table.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Model;
+namespace CPH\FileBirb\Model;
 
-use CPH\FileBird\Csv;
-use CPH\FileBird\Hooks;
+use CPH\FileBirb\Csv;
+use CPH\FileBirb\Hooks;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -136,10 +136,10 @@ final class Folder {
 	public function create( string $name, int $parent = 0 ): array|\WP_Error {
 		$name = $this->sanitize_name( $name );
 		if ( '' === $name ) {
-			return new \WP_Error( 'invalid_name', __( 'Folder name cannot be empty.', 'cph-filebird' ) );
+			return new \WP_Error( 'invalid_name', __( 'Folder name cannot be empty.', 'cph-filebirb' ) );
 		}
 		if ( $parent < 0 || ( $parent > 0 && ! $this->exists( $parent ) ) ) {
-			return new \WP_Error( 'invalid_parent', __( 'Parent folder does not exist.', 'cph-filebird' ) );
+			return new \WP_Error( 'invalid_parent', __( 'Parent folder does not exist.', 'cph-filebirb' ) );
 		}
 
 		$name = $this->unique_name( $name, $parent );
@@ -198,13 +198,13 @@ final class Folder {
 		}
 		$name = $this->sanitize_name( $name );
 		if ( '' === $name ) {
-			return new \WP_Error( 'invalid_name', __( 'Folder name cannot be empty.', 'cph-filebird' ) );
+			return new \WP_Error( 'invalid_name', __( 'Folder name cannot be empty.', 'cph-filebirb' ) );
 		}
 		if ( $name === $folder->name ) {
 			return true;
 		}
 		if ( in_array( $name, $this->sibling_names( $folder->parent, $id ), true ) ) {
-			return new \WP_Error( 'folder_name_exists', __( 'A folder with that name already exists here.', 'cph-filebird' ) );
+			return new \WP_Error( 'folder_name_exists', __( 'A folder with that name already exists here.', 'cph-filebirb' ) );
 		}
 
 		$wpdb->update( $this->table(), array( 'name' => $name ), array( 'id' => $id ), array( '%s' ), array( '%d' ) );
@@ -229,7 +229,7 @@ final class Folder {
 			return $this->not_found();
 		}
 		if ( $parent < 0 || $parent === $id || ( $parent > 0 && ! $this->exists( $parent ) ) || in_array( $parent, $this->descendant_ids( $id ), true ) ) {
-			return new \WP_Error( 'invalid_parent', __( 'A folder cannot be moved into itself, one of its subfolders, or a missing folder.', 'cph-filebird' ) );
+			return new \WP_Error( 'invalid_parent', __( 'A folder cannot be moved into itself, one of its subfolders, or a missing folder.', 'cph-filebirb' ) );
 		}
 
 		$changed_parent = $parent !== $folder->parent;
@@ -287,7 +287,7 @@ final class Folder {
 				return $this->not_found();
 			}
 			if ( $parent < 0 || ( $parent > 0 && ! isset( $parents[ $parent ] ) ) ) {
-				return new \WP_Error( 'invalid_parent', __( 'Parent folder does not exist.', 'cph-filebird' ) );
+				return new \WP_Error( 'invalid_parent', __( 'Parent folder does not exist.', 'cph-filebirb' ) );
 			}
 			$parents[ $id ] = $parent;
 			$updates[ $id ] = array( $parent, $ord );
@@ -303,7 +303,7 @@ final class Folder {
 			$cur  = $id;
 			while ( 0 !== $cur ) {
 				if ( isset( $seen[ $cur ] ) || ! isset( $parents[ $cur ] ) ) {
-					return new \WP_Error( 'invalid_parent', __( 'That order would put a folder inside itself.', 'cph-filebird' ) );
+					return new \WP_Error( 'invalid_parent', __( 'That order would put a folder inside itself.', 'cph-filebirb' ) );
 				}
 				$seen[ $cur ] = true;
 				$cur          = $parents[ $cur ];
@@ -357,7 +357,7 @@ final class Folder {
 			return $this->not_found();
 		}
 		if ( ! in_array( $mode, array( 'subtree', 'children-up' ), true ) ) {
-			return new \WP_Error( 'invalid_mode', __( 'Delete mode must be "subtree" or "children-up".', 'cph-filebird' ) );
+			return new \WP_Error( 'invalid_mode', __( 'Delete mode must be "subtree" or "children-up".', 'cph-filebirb' ) );
 		}
 
 		$ids = array( $id );
@@ -366,7 +366,7 @@ final class Folder {
 		}
 		foreach ( $ids as $check ) {
 			if ( ! Hooks::filter( 'can_delete_folder', true, $check ) ) {
-				return new \WP_Error( 'cannot_delete', __( 'This folder cannot be deleted.', 'cph-filebird' ) );
+				return new \WP_Error( 'cannot_delete', __( 'This folder cannot be deleted.', 'cph-filebirb' ) );
 			}
 		}
 
@@ -421,7 +421,7 @@ final class Folder {
 
 		$siblings = $this->sibling_names( $folder->parent );
 		/* translators: Suffix appended to a duplicated folder's name. */
-		$base = $folder->name . ' ' . __( '(Copy)', 'cph-filebird' );
+		$base = $folder->name . ' ' . __( '(Copy)', 'cph-filebirb' );
 		$name = $base;
 		for ( $i = 1; in_array( $name, $siblings, true ); $i++ ) {
 			$name = $base . ' ' . $i;
@@ -577,7 +577,7 @@ final class Folder {
 		} else {
 			$clean = sanitize_hex_color( $hex );
 			if ( ! $clean ) {
-				return new \WP_Error( 'invalid_color', __( 'Color must be a hex value like #ff0000.', 'cph-filebird' ) );
+				return new \WP_Error( 'invalid_color', __( 'Color must be a hex value like #ff0000.', 'cph-filebirb' ) );
 			}
 			$colors[ $id ] = $clean;
 		}
@@ -688,7 +688,7 @@ final class Folder {
 			array( '%s', '%d', '%d', '%d', '%d' )
 		);
 		if ( ! $inserted ) {
-			return new \WP_Error( 'db_error', __( 'Could not create the folder.', 'cph-filebird' ) );
+			return new \WP_Error( 'db_error', __( 'Could not create the folder.', 'cph-filebirb' ) );
 		}
 
 		$id   = (int) $wpdb->insert_id;
@@ -824,7 +824,7 @@ final class Folder {
 	 * @return \WP_Error
 	 */
 	private function not_found(): \WP_Error {
-		return new \WP_Error( 'folder_not_found', __( 'Folder not found.', 'cph-filebird' ), array( 'status' => 404 ) );
+		return new \WP_Error( 'folder_not_found', __( 'Folder not found.', 'cph-filebirb' ), array( 'status' => 404 ) );
 	}
 
 	/**

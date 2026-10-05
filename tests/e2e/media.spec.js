@@ -2,7 +2,7 @@
  * Stage B: folder column in `wp.media` frames, upload routing, moving
  * attachments (drag, "Move to folder…", context menu, details pane).
  *
- * Needs wp-env running with cph-filebird active and a few attachments.
+ * Needs wp-env running with cph-filebirb active and a few attachments.
  * Set CPHFB_SHOTS=/some/dir to save screenshots for design review.
  */
 const { test, expect } = require( '@playwright/test' );

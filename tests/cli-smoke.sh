@@ -30,7 +30,7 @@ cleanup() {
 }
 trap 'cleanup; sh_in "rm -rf $TMP" >/dev/null' EXIT
 
-wp plugin is-active cph-filebird || wp plugin activate cph-filebird >/dev/null
+wp plugin is-active cph-filebirb || wp plugin activate cph-filebirb >/dev/null
 sh_in "mkdir -p $TMP"
 
 # Baseline snapshot, compared again at the very end (after cleanup of our data).

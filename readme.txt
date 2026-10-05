@@ -34,7 +34,7 @@ Never run both at once. If FileBird is active, CPH FileBirb pauses itself and sh
 
 = New site =
 
-1. Upload `cph-filebird.zip` from the latest GitHub release via Plugins > Add New > Upload Plugin.
+1. Upload `cph-filebirb.zip` from the latest GitHub release via Plugins > Add New > Upload Plugin.
 2. Activate it. Folders appear in the media library.
 
 = Switching from FileBird =
@@ -63,7 +63,7 @@ Only CPH FileBirb's own settings (`cphfb_settings`, `cphfb_db_version`, per-user
 
 = How do updates work? =
 
-The plugin checks the GitHub releases of `dbreck/cph-filebird` and offers updates on the normal Plugins screen. Define `CPHFB_DISABLE_UPDATES` as `true` in `wp-config.php` to switch this off. If the repository is private, define `CPHFB_GITHUB_TOKEN` with a read-only token.
+The plugin checks the GitHub releases of `dbreck/cph-filebirb` and offers updates on the normal Plugins screen. Define `CPHFB_DISABLE_UPDATES` as `true` in `wp-config.php` to switch this off. If the repository is private, define `CPHFB_GITHUB_TOKEN` with a read-only token.
 
 = Does every user get their own folder tree? =
 
@@ -75,6 +75,6 @@ No. There is one shared folder tree per site. FileBird's per-user folder mode is
 * First release.
 * Backend core: install, folder and assignment models, global and per-user settings, CSV import and export.
 * Media library folder tree, drag and drop, bulk move, upload folder selection.
-* REST API (`cph-filebird/v1`) and WP-CLI commands (`wp cphfb`), including `wp cphfb verify` for cutovers.
+* REST API (`cph-filebirb/v1`) and WP-CLI commands (`wp cphfb`), including `wp cphfb verify` for cutovers.
 * Fires FileBird's `fbv_*` hooks for compatibility.
 * Self-hosted updates from GitHub releases.

@@ -7,7 +7,7 @@
  * can reinstall or switch back to FileBird with every folder intact. Define
  * `CPHFB_REMOVE_ALL_DATA` as true in wp-config.php to drop those as well.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;

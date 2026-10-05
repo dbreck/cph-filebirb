@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap (runs inside wp-env's tests-cli container).
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
@@ -25,7 +25,7 @@ require_once $cphfb_tests_dir . '/includes/functions.php';
 tests_add_filter(
 	'muplugins_loaded',
 	static function () use ( $cphfb_root ): void {
-		require $cphfb_root . '/cph-filebird.php';
+		require $cphfb_root . '/cph-filebirb.php';
 	}
 );
 
@@ -34,4 +34,4 @@ require $cphfb_tests_dir . '/includes/bootstrap.php';
 require_once __DIR__ . '/TestCase.php';
 
 // Real (non-temporary) tables, created before any test transaction starts.
-\CPH\FileBird\Install::create_tables();
+\CPH\FileBirb\Install::create_tables();

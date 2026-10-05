@@ -2,15 +2,15 @@
 /**
  * Settings and UserSettings tests.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Tests;
+namespace CPH\FileBirb\Tests;
 
-use CPH\FileBird\Model\Settings;
-use CPH\FileBird\Model\UserSettings;
+use CPH\FileBirb\Model\Settings;
+use CPH\FileBirb\Model\UserSettings;
 
 /**
  * Schema, defaults, sanitisation.

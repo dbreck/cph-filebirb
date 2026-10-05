@@ -122,10 +122,10 @@ export function folderExists( id ) {
 
 export function folderLabel( id ) {
 	if ( id === ALL ) {
-		return __( 'All files', 'cph-filebird' );
+		return __( 'All files', 'cph-filebirb' );
 	}
 	if ( id === UNCATEGORIZED ) {
-		return __( 'Uncategorized', 'cph-filebird' );
+		return __( 'Uncategorized', 'cph-filebirb' );
 	}
 	const node = findNode( state.tree, id );
 	return node ? node.name : '';
@@ -242,7 +242,7 @@ export function refreshCounts() {
  */
 export async function createFolder( parent = 0 ) {
 	parent = parent > 0 ? parent : 0;
-	const name = uniqueName( childrenOf( state.tree, parent ), __( 'New folder', 'cph-filebird' ) );
+	const name = uniqueName( childrenOf( state.tree, parent ), __( 'New folder', 'cph-filebirb' ) );
 	try {
 		const node = normalizeNode( await api.createFolder( name, parent ) );
 		setState( ( s ) => ( { tree: insertNode( s.tree, parent, node ) } ) );
@@ -250,7 +250,7 @@ export async function createFolder( parent = 0 ) {
 			setExpanded( parent, true );
 		}
 		setEditing( { id: node.id, isNew: true } );
-		speak( sprintf( /* translators: %s: folder name */ __( 'Folder %s created.', 'cph-filebird' ), node.name ) );
+		speak( sprintf( /* translators: %s: folder name */ __( 'Folder %s created.', 'cph-filebirb' ), node.name ) );
 		emit( 'change', state.tree );
 		return node;
 	} catch ( error ) {
@@ -273,7 +273,7 @@ export async function renameFolder( id, name ) {
 		return true;
 	}
 	if ( ! name ) {
-		return __( 'A folder name is required.', 'cph-filebird' );
+		return __( 'A folder name is required.', 'cph-filebirb' );
 	}
 	if ( name === node.name ) {
 		return true;
@@ -283,13 +283,13 @@ export async function renameFolder( id, name ) {
 	try {
 		const saved = await api.updateFolder( id, { name } );
 		setState( ( s ) => ( { tree: updateNode( s.tree, id, { name: saved.name ?? name } ) } ) );
-		speak( sprintf( /* translators: %s: folder name */ __( 'Folder renamed to %s.', 'cph-filebird' ), saved.name ?? name ) );
+		speak( sprintf( /* translators: %s: folder name */ __( 'Folder renamed to %s.', 'cph-filebirb' ), saved.name ?? name ) );
 		emit( 'change', state.tree );
 		return true;
 	} catch ( error ) {
 		setState( { tree: before } );
 		if ( error?.code === 'folder_name_exists' || error?.data?.status === 409 ) {
-			return __( 'A folder with this name already exists here.', 'cph-filebird' );
+			return __( 'A folder with this name already exists here.', 'cph-filebirb' );
 		}
 		return api.errorMessage( error );
 	}
@@ -300,7 +300,7 @@ export async function setColor( id, color ) {
 	setState( { tree: updateNode( state.tree, id, { color } ) } );
 	try {
 		await api.updateFolder( id, { color } );
-		speak( color ? __( 'Folder color set.', 'cph-filebird' ) : __( 'Folder color cleared.', 'cph-filebird' ) );
+		speak( color ? __( 'Folder color set.', 'cph-filebirb' ) : __( 'Folder color cleared.', 'cph-filebirb' ) );
 		emit( 'change', state.tree );
 	} catch ( error ) {
 		setState( { tree: before } );
@@ -317,7 +317,7 @@ export async function duplicateFolder( id ) {
 		setState( ( s ) => ( {
 			tree: insertNode( s.tree, copy.parent, copy, at < 0 ? Infinity : at + 1 ),
 		} ) );
-		speak( sprintf( /* translators: %s: folder name */ __( 'Folder %s duplicated.', 'cph-filebird' ), node?.name || '' ) );
+		speak( sprintf( /* translators: %s: folder name */ __( 'Folder %s duplicated.', 'cph-filebirb' ), node?.name || '' ) );
 		emit( 'change', state.tree );
 		refreshCounts();
 		return copy;
@@ -345,7 +345,7 @@ export async function deleteFolder( id, mode = 'subtree' ) {
 		if ( selectedGone ) {
 			selectFolder( ALL );
 		}
-		speak( sprintf( /* translators: %s: folder name */ __( 'Folder %s deleted.', 'cph-filebird' ), node?.name || '' ) );
+		speak( sprintf( /* translators: %s: folder name */ __( 'Folder %s deleted.', 'cph-filebirb' ), node?.name || '' ) );
 		emit( 'change', state.tree );
 		emit( 'delete', id );
 		return true;
@@ -386,7 +386,7 @@ export async function moveFolder( id, parent, index ) {
 			} ) );
 		}
 		const node = findNode( state.tree, id );
-		speak( sprintf( /* translators: 1: folder name, 2: parent folder name */ __( 'Moved %1$s into %2$s.', 'cph-filebird' ), node?.name || '', parent ? folderLabel( parent ) : __( 'the top level', 'cph-filebird' ) ) );
+		speak( sprintf( /* translators: 1: folder name, 2: parent folder name */ __( 'Moved %1$s into %2$s.', 'cph-filebirb' ), node?.name || '', parent ? folderLabel( parent ) : __( 'the top level', 'cph-filebirb' ) ) );
 		emit( 'change', state.tree );
 		refreshCounts();
 	} catch ( error ) {

@@ -1,10 +1,10 @@
 /**
- * Thin wrapper over the `cph-filebird/v1` REST routes.
+ * Thin wrapper over the `cph-filebirb/v1` REST routes.
  */
 import apiFetch from '@wordpress/api-fetch';
 
 const data = window.cphfbData || {};
-const NS = '/' + ( data.namespace || 'cph-filebird/v1' );
+const NS = '/' + ( data.namespace || 'cph-filebirb/v1' );
 
 if ( data.nonce ) {
 	apiFetch.use( apiFetch.createNonceMiddleware( data.nonce ) );

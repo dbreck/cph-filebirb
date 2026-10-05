@@ -2,16 +2,16 @@
 /**
  * List table and attachment field tests.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Tests;
+namespace CPH\FileBirb\Tests;
 
-use CPH\FileBird\Admin\AttachmentFields;
-use CPH\FileBird\Admin\ListTable;
-use CPH\FileBird\Query;
+use CPH\FileBirb\Admin\AttachmentFields;
+use CPH\FileBirb\Admin\ListTable;
+use CPH\FileBirb\Query;
 
 /**
  * Dropdown, column, bulk move, attachment edit field.

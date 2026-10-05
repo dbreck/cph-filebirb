@@ -2,12 +2,12 @@
 /**
  * Uninstall tests.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Tests;
+namespace CPH\FileBirb\Tests;
 
 /**
  * uninstall.php removes our data and keeps FileBird's.
@@ -34,7 +34,7 @@ class UninstallTest extends TestCase {
 		update_user_meta( $user, 'cphfb_user_settings', array( 'a' => 1 ) );
 
 		if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-			define( 'WP_UNINSTALL_PLUGIN', 'cph-filebird/cph-filebird.php' );
+			define( 'WP_UNINSTALL_PLUGIN', 'cph-filebirb/cph-filebirb.php' );
 		}
 		require dirname( __DIR__ ) . '/uninstall.php';
 		wp_cache_flush();
@@ -51,6 +51,6 @@ class UninstallTest extends TestCase {
 		$this->assertSame( '1', $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}fbv_attachment_folder" ) );
 
 		// Restore what the rest of the suite expects.
-		update_option( 'cphfb_db_version', \CPH\FileBird\Install::DB_VERSION );
+		update_option( 'cphfb_db_version', \CPH\FileBirb\Install::DB_VERSION );
 	}
 }

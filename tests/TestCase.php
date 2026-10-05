@@ -2,15 +2,15 @@
 /**
  * Shared test helpers.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Tests;
+namespace CPH\FileBirb\Tests;
 
-use CPH\FileBird\Model\Assignment;
-use CPH\FileBird\Model\Folder;
+use CPH\FileBirb\Model\Assignment;
+use CPH\FileBirb\Model\Folder;
 
 /**
  * Base case: clean tables and caches per test.

@@ -31,8 +31,8 @@ export function installCompat() {
 					speak(
 						sprintf(
 							/* translators: %s: folder name */
-							__( 'Moved to %s.', 'cph-filebird' ),
-							after > 0 ? store.folderLabel( after ) : __( 'Uncategorized', 'cph-filebird' )
+							__( 'Moved to %s.', 'cph-filebirb' ),
+							after > 0 ? store.folderLabel( after ) : __( 'Uncategorized', 'cph-filebirb' )
 						)
 					);
 				}

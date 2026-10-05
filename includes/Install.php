@@ -2,12 +2,12 @@
 /**
  * Table creation and first-run seeding.
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird;
+namespace CPH\FileBirb;
 
 defined( 'ABSPATH' ) || exit;
 

@@ -2,12 +2,12 @@
 /**
  * Global settings (option `cphfb_settings`).
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 declare(strict_types=1);
 
-namespace CPH\FileBird\Model;
+namespace CPH\FileBirb\Model;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -86,7 +86,7 @@ final class Settings {
 	 */
 	public function set( string $key, $value ): bool|\WP_Error {
 		if ( ! array_key_exists( $key, self::DEFAULTS ) ) {
-			return new \WP_Error( 'invalid_setting', __( 'Unknown setting.', 'cph-filebird' ) );
+			return new \WP_Error( 'invalid_setting', __( 'Unknown setting.', 'cph-filebirb' ) );
 		}
 		$this->update( array( $key => $value ) );
 		return true;

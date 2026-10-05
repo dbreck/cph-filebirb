@@ -7,13 +7,13 @@
  * Author URI:        https://clearph.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       cph-filebird
+ * Text Domain:       cph-filebirb
  * Domain Path:       /languages
  * Requires at least: 6.5
  * Requires PHP:      8.1
- * Update URI:        https://github.com/dbreck/cph-filebird
+ * Update URI:        https://github.com/dbreck/cph-filebirb
  *
- * @package CPH\FileBird
+ * @package CPH\FileBirb
  */
 
 // This file must stay parseable on PHP 7.x so the version guard below can
@@ -50,7 +50,7 @@ if ( version_compare( PHP_VERSION, CPHFB_MIN_PHP, '<' ) || version_compare( get_
 	cphfb_boot_notice(
 		sprintf(
 			/* translators: 1: required PHP version, 2: required WordPress version, 3: current PHP version, 4: current WordPress version. */
-			__( 'CPH FileBirb needs PHP %1$s+ and WordPress %2$s+ (this site runs PHP %3$s, WordPress %4$s). It is not running.', 'cph-filebird' ),
+			__( 'CPH FileBirb needs PHP %1$s+ and WordPress %2$s+ (this site runs PHP %3$s, WordPress %4$s). It is not running.', 'cph-filebirb' ),
 			CPHFB_MIN_PHP,
 			CPHFB_MIN_WP,
 			PHP_VERSION,
@@ -61,7 +61,7 @@ if ( version_compare( PHP_VERSION, CPHFB_MIN_PHP, '<' ) || version_compare( get_
 }
 
 if ( ! is_readable( CPHFB_PATH . 'vendor/autoload.php' ) ) {
-	cphfb_boot_notice( __( 'CPH FileBirb is missing its autoloader. Run "composer install" in the plugin folder or reinstall the plugin.', 'cph-filebird' ) );
+	cphfb_boot_notice( __( 'CPH FileBirb is missing its autoloader. Run "composer install" in the plugin folder or reinstall the plugin.', 'cph-filebirb' ) );
 	return;
 }
 
@@ -75,12 +75,12 @@ require_once CPHFB_PATH . 'vendor/autoload.php';
  * @return void
  */
 function cphfb_activate() {
-	if ( \CPH\FileBird\Plugin::filebird_active() ) {
+	if ( \CPH\FileBirb\Plugin::filebird_active() ) {
 		return;
 	}
-	\CPH\FileBird\Install::activate();
+	\CPH\FileBirb\Install::activate();
 }
 
 register_activation_hook( __FILE__, 'cphfb_activate' );
 
-add_action( 'plugins_loaded', array( \CPH\FileBird\Plugin::class, 'get_instance' ) );
+add_action( 'plugins_loaded', array( \CPH\FileBirb\Plugin::class, 'get_instance' ) );
