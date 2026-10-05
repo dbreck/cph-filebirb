@@ -477,7 +477,7 @@ final class Commands {
 
 			$actual = array();
 			foreach ( (array) $wpdb->get_results( "SHOW COLUMNS FROM `{$table}`" ) as $column ) { // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-				$type                      = preg_replace( '/^((?:big|tiny|small|medium)?int)\(\d+\)/', '$1', strtolower( (string) $column->Type ) ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+				$type                     = preg_replace( '/^((?:big|tiny|small|medium)?int)\(\d+\)/', '$1', strtolower( (string) $column->Type ) ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 				$actual[ $column->Field ] = array( $type, $column->Null ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			}
 

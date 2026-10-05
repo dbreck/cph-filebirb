@@ -112,6 +112,10 @@ final class Csv {
 	public function import( string $csv ): array|\WP_Error {
 		global $wpdb;
 
+		if ( strlen( $csv ) > self::max_bytes() ) {
+			return new \WP_Error( 'invalid_csv_size', __( 'That CSV file is too large.', 'cph-filebird' ), array( 'status' => 413 ) );
+		}
+
 		$csv    = preg_replace( '/^\xEF\xBB\xBF/', '', $csv );
 		$handle = fopen( 'php://temp', 'r+' );
 		fwrite( $handle, (string) $csv );
@@ -155,7 +159,7 @@ final class Csv {
 			$children[ $parent ][] = $old_id;
 		}
 		foreach ( $children as &$list ) {
-			usort( $list, static fn( $a, $b ) => ( (int) ( $rows[ $a ]['ord'] ?? 0 ) <=> (int) ( $rows[ $b ]['ord'] ?? 0 ) ) ?: $a <=> $b );
+			usort( $list, static fn( $a, $b ) => ( (int) ( $rows[ $a ]['ord'] ?? 0 ) <=> (int) ( $rows[ $b ]['ord'] ?? 0 ) ) ?: $a <=> $b ); // phpcs:ignore Universal.Operators.DisallowShortTernary.Found -- falls back to ID order on equal ord.
 		}
 		unset( $list );
 
@@ -174,7 +178,7 @@ final class Csv {
 			$existing     = array_flip(
 				array_map(
 					'intval',
-					(array) $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'attachment' AND ID IN ({$placeholders})", $all_ids ) ) // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+					(array) $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'attachment' AND ID IN ({$placeholders})", $all_ids ) ) // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- table names from $wpdb->prefix; placeholders built per ID.
 				)
 			);
 		}
@@ -217,6 +221,20 @@ final class Csv {
 		}
 
 		return $counts;
+	}
+
+	/**
+	 * Largest CSV accepted for import, in bytes.
+	 *
+	 * @return int
+	 */
+	public static function max_bytes(): int {
+		/**
+		 * Filters the largest CSV import accepted, in bytes. Default 10 MB.
+		 *
+		 * @param int $bytes Maximum size.
+		 */
+		return (int) apply_filters( 'cphfb_csv_import_max_bytes', 10 * MB_IN_BYTES );
 	}
 
 	/**

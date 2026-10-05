@@ -116,14 +116,28 @@ final class SettingsPage {
 		add_settings_section( 'cphfb_general', __( 'Folders', 'cph-filebird' ), '__return_false', self::SLUG );
 
 		add_settings_field( 'default_sort', __( 'Default folder sort', 'cph-filebird' ), array( $this, 'field_sort' ), self::SLUG, 'cphfb_general', array( 'label_for' => 'cphfb-default-sort' ) );
-		add_settings_field( 'include_subfolders_in_count', __( 'Folder counts', 'cph-filebird' ), array( $this, 'field_checkbox' ), self::SLUG, 'cphfb_general', array(
-			'key'   => 'include_subfolders_in_count',
-			'label' => __( 'Include files in subfolders in each folder\'s count', 'cph-filebird' ),
-		) );
-		add_settings_field( 'include_subfolders_in_query', __( 'Folder view', 'cph-filebird' ), array( $this, 'field_checkbox' ), self::SLUG, 'cphfb_general', array(
-			'key'   => 'include_subfolders_in_query',
-			'label' => __( 'Show files in subfolders when a folder is selected', 'cph-filebird' ),
-		) );
+		add_settings_field(
+			'include_subfolders_in_count',
+			__( 'Folder counts', 'cph-filebird' ),
+			array( $this, 'field_checkbox' ),
+			self::SLUG,
+			'cphfb_general',
+			array(
+				'key'   => 'include_subfolders_in_count',
+				'label' => __( 'Include files in subfolders in each folder\'s count', 'cph-filebird' ),
+			)
+		);
+		add_settings_field(
+			'include_subfolders_in_query',
+			__( 'Folder view', 'cph-filebird' ),
+			array( $this, 'field_checkbox' ),
+			self::SLUG,
+			'cphfb_general',
+			array(
+				'key'   => 'include_subfolders_in_query',
+				'label' => __( 'Show files in subfolders when a folder is selected', 'cph-filebird' ),
+			)
+		);
 	}
 
 	/**
@@ -292,9 +306,14 @@ final class SettingsPage {
 	public function import_csv(): void {
 		$this->guard( 'cphfb_import_csv' );
 
-		$file = $_FILES['cphfb_csv'] ?? null; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- tmp_name is checked with is_uploaded_file.
+		$file = $_FILES['cphfb_csv'] ?? null; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- nonce checked in guard(); tmp_name is checked with is_uploaded_file.
 		if ( ! is_array( $file ) || UPLOAD_ERR_OK !== (int) ( $file['error'] ?? UPLOAD_ERR_NO_FILE ) || ! is_uploaded_file( (string) $file['tmp_name'] ) ) {
 			$this->redirect( 'error', __( 'No file was uploaded.', 'cph-filebird' ) );
+		}
+
+		// Checked before reading; Csv::import() checks again for the REST and CLI paths.
+		if ( (int) filesize( (string) $file['tmp_name'] ) > Csv::max_bytes() ) {
+			$this->redirect( 'error', __( 'That CSV file is too large.', 'cph-filebird' ) );
 		}
 
 		$result = Csv::get_instance()->import( (string) file_get_contents( (string) $file['tmp_name'] ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents

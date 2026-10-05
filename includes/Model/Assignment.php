@@ -83,7 +83,7 @@ final class Assignment {
 
 		$table        = $this->table();
 		$placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
-		$wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE attachment_id IN ({$placeholders})", $ids ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE attachment_id IN ({$placeholders})", $ids ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- table names from $wpdb->prefix; placeholders built per ID.
 
 		if ( $folder_id > 0 ) {
 			$values = array();
@@ -91,7 +91,7 @@ final class Assignment {
 				array_push( $values, $folder_id, $id );
 			}
 			$rows = implode( ',', array_fill( 0, count( $ids ), '(%d,%d)' ) );
-			$wpdb->query( $wpdb->prepare( "INSERT INTO {$table} (folder_id, attachment_id) VALUES {$rows}", $values ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$wpdb->query( $wpdb->prepare( "INSERT INTO {$table} (folder_id, attachment_id) VALUES {$rows}", $values ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- table names from $wpdb->prefix; placeholders built per ID.
 		}
 
 		foreach ( $ids as $id ) {
@@ -145,7 +145,7 @@ final class Assignment {
 		$placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
 		$rows         = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT fbva.attachment_id, MIN(fbva.folder_id) AS folder_id FROM {$this->table()} AS fbva INNER JOIN {$wpdb->prefix}fbv AS fbv ON fbv.id = fbva.folder_id WHERE fbva.attachment_id IN ({$placeholders}) GROUP BY fbva.attachment_id", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				"SELECT fbva.attachment_id, MIN(fbva.folder_id) AS folder_id FROM {$this->table()} AS fbva INNER JOIN {$wpdb->prefix}fbv AS fbv ON fbv.id = fbva.folder_id WHERE fbva.attachment_id IN ({$placeholders}) GROUP BY fbva.attachment_id", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- table names from $wpdb->prefix; placeholders built per ID.
 				$ids
 			)
 		);
@@ -189,7 +189,7 @@ final class Assignment {
 		$placeholders = implode( ',', array_fill( 0, count( $folders ), '%d' ) );
 		return array_map(
 			'intval',
-			(array) $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT attachment_id FROM {$this->table()} WHERE folder_id IN ({$placeholders}) ORDER BY attachment_id ASC", $folders ) ) // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			(array) $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT attachment_id FROM {$this->table()} WHERE folder_id IN ({$placeholders}) ORDER BY attachment_id ASC", $folders ) ) // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- table names from $wpdb->prefix; placeholders built per ID.
 		);
 	}
 
@@ -238,7 +238,8 @@ final class Assignment {
 						$total += $sum( $child, $path + array( $child => true ) );
 					}
 				}
-				return $totals[ $id ] = $total;
+				$totals[ $id ] = $total;
+				return $total;
 			};
 			foreach ( array_keys( $folders ) as $id ) {
 				$folders[ $id ] = $sum( $id, array( $id => true ) );
@@ -247,7 +248,7 @@ final class Assignment {
 
 		$counts = array(
 			'all'           => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->posts} AS posts WHERE {$status}" ), // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			'uncategorized' => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->posts} AS posts WHERE {$status} AND " . $this->uncategorized_where( 'posts.ID' ) ), // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			'uncategorized' => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->posts} AS posts WHERE {$status} AND " . $this->uncategorized_where( 'posts.ID' ) ), // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared -- fixed SQL built from $wpdb table names, no user input.
 			'folders'       => $folders,
 		);
 
@@ -272,8 +273,8 @@ final class Assignment {
 	public function cleanup_orphans(): int {
 		global $wpdb;
 
-		$table   = $this->table();
-		$removed = (int) $wpdb->query( "DELETE fbva FROM {$table} AS fbva LEFT JOIN {$wpdb->posts} AS posts ON posts.ID = fbva.attachment_id WHERE posts.ID IS NULL" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$table    = $this->table();
+		$removed  = (int) $wpdb->query( "DELETE fbva FROM {$table} AS fbva LEFT JOIN {$wpdb->posts} AS posts ON posts.ID = fbva.attachment_id WHERE posts.ID IS NULL" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$removed += (int) $wpdb->query( "DELETE fbva FROM {$table} AS fbva LEFT JOIN {$wpdb->prefix}fbv AS fbv ON fbv.id = fbva.folder_id WHERE fbv.id IS NULL" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		$this->invalidate_counts();

@@ -142,7 +142,7 @@ final class ListTable {
 		}
 		$url = add_query_arg(
 			array(
-				'mode'      => 'list',
+				'mode'     => 'list',
 				Query::VAR => $folder,
 			),
 			admin_url( 'upload.php' )

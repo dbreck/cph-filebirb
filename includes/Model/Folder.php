@@ -278,7 +278,7 @@ final class Folder {
 
 		$updates = array();
 		foreach ( $items as $item ) {
-			$item = (array) $item;
+			$item   = (array) $item;
 			$id     = (int) ( $item['id'] ?? $item[0] ?? 0 );
 			$parent = (int) ( $item['parent'] ?? $item[1] ?? 0 );
 			$ord    = (int) ( $item['ord'] ?? $item[2] ?? 0 );
@@ -325,7 +325,7 @@ final class Folder {
 		$placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
 		$wpdb->query(
 			$wpdb->prepare(
-				"UPDATE {$table} SET parent = CASE id{$parent_case} END, ord = CASE id{$ord_case} END WHERE id IN ({$placeholders})", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				"UPDATE {$table} SET parent = CASE id{$parent_case} END, ord = CASE id{$ord_case} END WHERE id IN ({$placeholders})", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- table names from $wpdb->prefix; placeholders built per ID.
 				array_merge( $values_p, $values_o, $ids )
 			)
 		);
@@ -504,7 +504,7 @@ final class Folder {
 	 * @return array[]
 	 */
 	public function tree( array $args = array() ): array {
-		$rows = $this->all( $args );
+		$rows  = $this->all( $args );
 		$nodes = array_map( array( $this, 'node' ), $rows );
 
 		if ( '' !== trim( (string) ( $args['search'] ?? '' ) ) ) {
@@ -611,13 +611,15 @@ final class Folder {
 	}
 
 	/**
-	 * Strip formula-leading characters and markup from a name, like FileBird.
+	 * Strip formula-leading characters and markup from a name, like FileBird, and cap it at the column length.
 	 *
 	 * @param string $name Raw name.
 	 * @return string
 	 */
 	public function sanitize_name( string $name ): string {
-		return trim( sanitize_text_field( wp_unslash( wp_kses_post( Csv::sanitize_for_excel( trim( $name ) ) ) ) ) );
+		$name = trim( sanitize_text_field( wp_unslash( wp_kses_post( Csv::sanitize_for_excel( trim( $name ) ) ) ) ) );
+		// `name` is varchar(250): strict-mode MySQL rejects longer values, others truncate silently.
+		return trim( mb_substr( $name, 0, 250 ) );
 	}
 
 	/**
@@ -722,8 +724,8 @@ final class Folder {
 
 		$ids          = array_values( array_unique( array_map( 'intval', $ids ) ) );
 		$placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
-		$wpdb->query( $wpdb->prepare( "DELETE FROM {$this->table()} WHERE id IN ({$placeholders})", $ids ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->prefix}fbv_attachment_folder WHERE folder_id IN ({$placeholders})", $ids ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$wpdb->query( $wpdb->prepare( "DELETE FROM {$this->table()} WHERE id IN ({$placeholders})", $ids ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- table names from $wpdb->prefix; placeholders built per ID.
+		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->prefix}fbv_attachment_folder WHERE folder_id IN ({$placeholders})", $ids ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- table names from $wpdb->prefix; placeholders built per ID.
 
 		// FileBird drops these from a by-value copy and never saves; persist the cleanup.
 		$colors = $this->get_colors();

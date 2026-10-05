@@ -47,19 +47,19 @@ final class Hooks {
 	 * @var array<string,string>
 	 */
 	public const FILTERS = array(
-		'folder_created_by'       => 'fbv_folder_created_by',       // ( int $created_by = 0 ).
-		'will_check_author'       => 'fbv_will_check_author',       // ( bool $check = true ). Reserved; shared tree never filters by author.
-		'ids_assigned_to_folder'  => 'fbv_ids_assigned_to_folder',  // ( int[] $attachment_ids ).
-		'all_folders_and_count'   => 'fbv_all_folders_and_count',   // ( string $sql, string|null $lang ).
-		'user_default_folder'     => 'fbv_user_default_folder',     // ( int $folder_id, int $user_id ).
+		'folder_created_by'        => 'fbv_folder_created_by',       // ( int $created_by = 0 ).
+		'will_check_author'        => 'fbv_will_check_author',       // ( bool $check = true ). Reserved; shared tree never filters by author.
+		'ids_assigned_to_folder'   => 'fbv_ids_assigned_to_folder',  // ( int[] $attachment_ids ).
+		'all_folders_and_count'    => 'fbv_all_folders_and_count',   // ( string $sql, string|null $lang ).
+		'user_default_folder'      => 'fbv_user_default_folder',     // ( int $folder_id, int $user_id ).
 		'query_include_subfolders' => 'fbv_query_include_subfolders', // ( bool $include, int $folder_id ).
-		'can_delete_folder'       => 'fbv_can_delete_folder',       // ( bool $can, int $folder_id ).
-		'auto_create_folders'     => 'fbv_auto_create_folders',     // ( bool $auto = true ).
-		'counter_type'            => 'fbv_counter_type',            // ( string $type ).
-		'speedup_get_count_query' => 'fbv_speedup_get_count_query', // ( bool $speedup = false ).
-		'download_filename'       => 'fbv_download_filename',       // ( string $zip_name, object $folder ).
-		'use_zipstream'           => 'fbv_use_zipstream',           // ( bool $use = true ).
-		'post_types'              => 'filebird_post_types',         // ( array $post_types ).
+		'can_delete_folder'        => 'fbv_can_delete_folder',       // ( bool $can, int $folder_id ).
+		'auto_create_folders'      => 'fbv_auto_create_folders',     // ( bool $auto = true ).
+		'counter_type'             => 'fbv_counter_type',            // ( string $type ).
+		'speedup_get_count_query'  => 'fbv_speedup_get_count_query', // ( bool $speedup = false ).
+		'download_filename'        => 'fbv_download_filename',       // ( string $zip_name, object $folder ).
+		'use_zipstream'            => 'fbv_use_zipstream',           // ( bool $use = true ).
+		'post_types'               => 'filebird_post_types',         // ( array $post_types ).
 	);
 
 	/**
