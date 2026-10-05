@@ -143,7 +143,8 @@ final class Upload {
 			return $parent;
 		}
 
-		foreach ( $parts as $name ) {
+		// Cap the depth so one upload can't create an unbounded chain of folders.
+		foreach ( array_slice( $parts, 0, 10 ) as $name ) {
 			$id = Folder::get_instance()->get_or_create( $name, $parent );
 			if ( is_wp_error( $id ) ) {
 				return 0;

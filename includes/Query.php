@@ -146,7 +146,7 @@ final class Query {
 		}
 		$placeholders = implode( ',', array_fill( 0, count( $folders ), '%d' ) );
 		// IN (subquery) rather than a JOIN, so an attachment can never appear twice.
-		$clauses['where'] .= $wpdb->prepare( " AND {$wpdb->posts}.ID IN (SELECT cphfb_q.attachment_id FROM {$assignments->table()} AS cphfb_q WHERE cphfb_q.folder_id IN ({$placeholders}))", $folders ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$clauses['where'] .= $wpdb->prepare( " AND {$wpdb->posts}.ID IN (SELECT cphfb_q.attachment_id FROM {$assignments->table()} AS cphfb_q WHERE cphfb_q.folder_id IN ({$placeholders}))", $folders ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- table names from $wpdb; placeholders built per ID.
 
 		return $clauses;
 	}

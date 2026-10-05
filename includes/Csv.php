@@ -50,7 +50,7 @@ final class Csv {
 	private function __construct() {}
 
 	/**
-	 * Strip leading `= + - @ |` so a value can't run as a spreadsheet formula (FileBird's rule).
+	 * Strip leading `= + - @ |`, tab and CR so a value can't run as a spreadsheet formula (FileBird's rule).
 	 *
 	 * @param mixed $input Raw value.
 	 * @return string
@@ -59,7 +59,7 @@ final class Csv {
 		if ( ! is_string( $input ) || '' === $input ) {
 			return '';
 		}
-		return ltrim( $input, '=+-@|' );
+		return ltrim( $input, "=+-@|\t\r" );
 	}
 
 	/**

@@ -75,6 +75,7 @@ final class AttachmentController {
 						),
 						'required' => true,
 						'minItems' => 1,
+						'maxItems' => 5000,
 					),
 				),
 			)
