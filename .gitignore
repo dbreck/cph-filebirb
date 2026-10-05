@@ -3,3 +3,7 @@ reference/
 vendor/
 node_modules/
 .DS_Store
+.wp-env/
+.wp-env.override.json
+.phpunit.result.cache
+.phpunit.lock/

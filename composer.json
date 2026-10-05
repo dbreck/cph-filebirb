@@ -1,0 +1,28 @@
+{
+	"name": "clearph/cph-filebird",
+	"description": "Media library folders for WordPress. Data-compatible with FileBird.",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0-or-later",
+	"require": {
+		"php": ">=8.1"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^9.6",
+		"yoast/phpunit-polyfills": "^2.0",
+		"wp-phpunit/wp-phpunit": "^6.5"
+	},
+	"autoload": {
+		"psr-4": {
+			"CPH\\FileBird\\": "includes/"
+		}
+	},
+	"config": {
+		"platform": {
+			"php": "8.1.0"
+		},
+		"sort-packages": true
+	},
+	"scripts": {
+		"test": "phpunit"
+	}
+}
