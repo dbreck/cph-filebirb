@@ -1,0 +1,36 @@
+# Files kept out of the release zip. bin/build-zip.sh copies an allow-list
+# (cph-filebird.php, uninstall.php, readme.txt, includes/, assets/build/,
+# languages/, production vendor/); this list mirrors it for other tooling
+# such as `wp dist-archive`.
+/.git
+/.github
+/.gitignore
+/.gitattributes
+/.distignore
+/.wp-env.json
+/.wp-env.override.json
+/.phpunit.result.cache
+/.phpunit.lock
+/.claude
+/assets/src
+/bin
+/build
+/dist
+/node_modules
+/reference
+/tests
+/test-results
+/playwright-report
+/CLAUDE.md
+/PLAN.md
+/README.md
+/composer.json
+/composer.lock
+/package.json
+/package-lock.json
+/phpcs.xml.dist
+/phpunit.xml.dist
+/playwright.config.js
+/webpack.config.js
+*.zip
+.DS_Store

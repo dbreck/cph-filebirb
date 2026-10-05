@@ -7,3 +7,4 @@ node_modules/
 .wp-env.override.json
 .phpunit.result.cache
 .phpunit.lock/
+dist/
