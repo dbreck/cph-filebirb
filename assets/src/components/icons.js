@@ -128,3 +128,16 @@ export const CheckIcon = ( props ) => (
 		<path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 	</Svg>
 );
+
+export const MoveIcon = ( props ) => (
+	<Svg size={ 18 } { ...props } className="cphfb-icon cphfb-icon--move">
+		<path
+			d="M3.5 7.5A1.5 1.5 0 0 1 5 6h4l2 2h8a1.5 1.5 0 0 1 1.5 1.5v8A1.5 1.5 0 0 1 19 19H5a1.5 1.5 0 0 1-1.5-1.5z"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="1.6"
+			strokeLinejoin="round"
+		/>
+		<path d="M9 13.5h6m-2.5-2.5 2.5 2.5-2.5 2.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+	</Svg>
+);

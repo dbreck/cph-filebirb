@@ -85,12 +85,21 @@ let settingsTimer = null;
 export function persistUserSettings( patch ) {
 	pendingSettings = { ...pendingSettings, ...patch };
 	clearTimeout( settingsTimer );
-	settingsTimer = setTimeout( () => {
-		const body = pendingSettings;
-		pendingSettings = {};
-		api.saveUserSettings( body ).catch( () => {} );
-	}, 600 );
+	settingsTimer = setTimeout( flushUserSettings, 600 );
 }
+
+function flushUserSettings( keepalive = false ) {
+	clearTimeout( settingsTimer );
+	if ( ! Object.keys( pendingSettings ).length ) {
+		return;
+	}
+	const body = pendingSettings;
+	pendingSettings = {};
+	api.saveUserSettings( body, keepalive ).catch( () => {} );
+}
+
+// Leaving the page right after a change (e.g. picking a folder, then "Update"): still save it.
+window.addEventListener( 'pagehide', () => flushUserSettings( true ) );
 
 /* Notices ----------------------------------------------------------------- */
 
@@ -412,4 +421,59 @@ export async function assignToFolder( folder, ids ) {
 		notify( api.errorMessage( error ) );
 		return null;
 	}
+}
+
+/**
+ * Optimistically shift counts for attachments changing folder. The server's
+ * counts replace these as soon as the assign request returns.
+ *
+ * @param {Array<{from: number, to: number}>} moves Folder changes (NaN `from` = unknown, skipped).
+ */
+export function shiftCounts( moves ) {
+	if ( ! state.counts ) {
+		return;
+	}
+	const counts = { ...state.counts, folders: { ...( state.counts.folders || {} ) } };
+	const bump = ( id, delta ) => {
+		if ( id > 0 ) {
+			counts.folders[ id ] = Math.max( 0, ( Number( counts.folders[ id ] ) || 0 ) + delta );
+		} else if ( id === UNCATEGORIZED ) {
+			counts.uncategorized = Math.max( 0, ( Number( counts.uncategorized ) || 0 ) + delta );
+		}
+	};
+	moves.forEach( ( { from, to } ) => {
+		if ( Number.isNaN( from ) || from === to ) {
+			return;
+		}
+		bump( from, -1 );
+		bump( to, 1 );
+	} );
+	setCounts( counts );
+}
+
+/* Modals ------------------------------------------------------------------ */
+
+let modalFolder = null;
+
+/**
+ * The folder a newly opened `wp.media` frame starts in: the last one picked in
+ * any frame on this page, else the user's last folder.
+ *
+ * @return {number} Folder id.
+ */
+export function getModalFolder() {
+	const id = modalFolder ?? state.selected;
+	return folderExists( id ) ? id : ALL;
+}
+
+/**
+ * Remember a folder picked inside a modal, without touching the store's own
+ * selection (other open frames keep theirs).
+ *
+ * @param {number} id Folder id.
+ */
+export function rememberModalFolder( id ) {
+	modalFolder = id;
+	storage.set( 'selected', id );
+	persistUserSettings( { selected_folder: id } );
 }

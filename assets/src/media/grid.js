@@ -7,6 +7,35 @@
  */
 import { ALL } from '../tree';
 import * as store from '../store';
+import { filterLibrary, idsOf, moveAttachments } from './move';
+import { addMoveButton } from './moveButton';
+import { onBrowser } from './modal';
+
+/* Bulk selection, for the sidebar's "Move selected files here". */
+const selectionListeners = new Set();
+let selection = null;
+
+export const gridSelection = {
+	subscribe( callback ) {
+		selectionListeners.add( callback );
+		return () => selectionListeners.delete( callback );
+	},
+	getCount: () => idsOf( selection ).length,
+	getIds: () => idsOf( selection ),
+	getCurrent: () => null,
+	moveTo: ( folder ) => moveAttachments( folder, idsOf( selection ) ),
+};
+
+function bindSelection( f ) {
+	const next = f.state?.()?.get?.( 'selection' );
+	if ( ! next || next === selection ) {
+		return;
+	}
+	selection = next;
+	const notify = () => selectionListeners.forEach( ( callback ) => callback() );
+	selection.on( 'add remove reset', notify );
+	notify();
+}
 
 let frame = null;
 
@@ -41,7 +70,8 @@ export function filterGrid( id ) {
 	if ( ! library ) {
 		return;
 	}
-	if ( Number( library.props.get( 'fbv' ) ) === id ) {
+	const current = library.props.get( 'fbv' );
+	if ( ( current === undefined || current === null ? ALL : Number( current ) ) === id ) {
 		return;
 	}
 	library.props.set( { fbv: id } );
@@ -65,8 +95,10 @@ export function requery() {
 
 function watchFrame( f ) {
 	frame = f;
+	bindSelection( f );
 	const library = libraryOf( f );
 	if ( library ) {
+		filterLibrary( library );
 		// Attachment deleted from the grid or details modal.
 		library.on( 'remove', ( model, collection, options ) => {
 			if ( ! options || ! options.silent ) {
@@ -108,9 +140,19 @@ export function installGrid( initialFolder ) {
 		}
 	}
 
-	// Uploads finished: the queue resets once all files are done.
-	const queue = window.wp?.Uploader?.queue;
-	queue?.on?.( 'reset', () => store.refreshCounts() );
+	// Bulk select toolbar: "Move to folder…".
+	onBrowser( ( browser ) => {
+		const controller = browser.controller;
+		if ( ! controller?.isModeActive?.( 'grid' ) ) {
+			return;
+		}
+		addMoveButton( browser.toolbar, browser.options.selection, {
+			priority: -60,
+			hideEmpty: false,
+			visible: () => controller.isModeActive( 'select' ),
+			events: [ [ controller, 'select:activate select:deactivate' ] ],
+		} );
+	} );
 
 	store.on( 'select', filterGrid );
 }

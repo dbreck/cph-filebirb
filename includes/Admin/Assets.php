@@ -11,6 +11,7 @@ namespace CPH\FileBird\Admin;
 
 use CPH\FileBird\Model\Assignment;
 use CPH\FileBird\Model\Folder;
+use CPH\FileBird\Model\Settings;
 use CPH\FileBird\Model\UserSettings;
 use CPH\FileBird\Query;
 use CPH\FileBird\Rest\Permissions;
@@ -26,11 +27,6 @@ final class Assets {
 	 * Script and style handle.
 	 */
 	public const HANDLE = 'cphfb-admin';
-
-	/**
-	 * Mount the sidebar inside `wp.media` modals too. Off until stage B lands.
-	 */
-	private const MODALS = false;
 
 	/**
 	 * Singleton instance.
@@ -64,6 +60,7 @@ final class Assets {
 	private function __construct() {
 		add_action( 'load-upload.php', array( $this, 'on_load_upload' ) );
 		add_action( 'wp_enqueue_media', array( $this, 'on_enqueue_media' ) );
+		add_action( 'load-media-new.php', array( $this, 'on_load_media_new' ) );
 	}
 
 	/**
@@ -83,23 +80,38 @@ final class Assets {
 	}
 
 	/**
-	 * Any `wp_enqueue_media()` call (post editor, widgets, Customizer...).
+	 * Any `wp_enqueue_media()` call in wp-admin (post and block editors, page
+	 * builders, theme options, widgets, Customizer...). Only prototype hooks run
+	 * on load; the tree mounts when a media frame builds a library browser.
 	 *
 	 * @return void
 	 */
 	public function on_enqueue_media(): void {
-		if ( ! self::MODALS || ! current_user_can( 'upload_files' ) ) {
+		if ( ! is_admin() || ! current_user_can( 'upload_files' ) ) {
 			return;
 		}
-		$this->enqueue();
+		$this->enqueue( true );
+	}
+
+	/**
+	 * Media > Add New: the "Upload to" picker on the plupload form.
+	 *
+	 * @return void
+	 */
+	public function on_load_media_new(): void {
+		if ( ! current_user_can( 'upload_files' ) || ! $this->built() ) {
+			return;
+		}
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 	}
 
 	/**
 	 * Enqueue the bundle and its data. Safe to call more than once.
 	 *
+	 * @param bool $media Whether `wp.media` is on the page (load after media-views).
 	 * @return void
 	 */
-	public function enqueue(): void {
+	public function enqueue( $media = false ): void {
 		if ( $this->enqueued || ! current_user_can( 'upload_files' ) || ! $this->built() ) {
 			return;
 		}
@@ -112,7 +124,7 @@ final class Assets {
 			// Load after media-grid so we can hook the Manage frame before it is built.
 			$deps[] = 'media-grid';
 		}
-		if ( 'grid' === $mode || self::MODALS ) {
+		if ( 'grid' === $mode || true === $media ) {
 			$deps[] = 'media-views';
 		}
 		$version = (string) ( $asset['version'] ?? CPHFB_VERSION );
@@ -218,6 +230,9 @@ final class Assets {
 			'userSettings'      => UserSettings::get_instance()->all(),
 			'canManage'         => current_user_can( 'upload_files' ),
 			'canManageSettings' => current_user_can( 'manage_options' ),
+			'settings'          => array(
+				'includeSubfolders' => (bool) Settings::get_instance()->get( 'include_subfolders_in_query' ),
+			),
 			'uploadUrl'         => admin_url( 'upload.php' ),
 			'siteKey'           => $this->site_key(),
 			'tree'              => $tree,

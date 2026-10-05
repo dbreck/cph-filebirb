@@ -33,6 +33,7 @@ import {
 	sortTree,
 } from '../tree';
 import DeleteDialog from './DeleteDialog';
+import { openFolderPicker } from './FolderPicker';
 import Menu from './Menu';
 import ResizeHandle from './ResizeHandle';
 import TreeRow from './TreeRow';
@@ -41,6 +42,7 @@ import {
 	CloseIcon,
 	FolderIcon,
 	InboxIcon,
+	MoveIcon,
 	PanelIcon,
 	PlusIcon,
 	SearchIcon,
@@ -51,6 +53,8 @@ const data = window.cphfbData || {};
 let instances = 0;
 
 const useStore = () => useSyncExternalStore( store.subscribe, store.getState );
+
+const noSelection = { subscribe: () => () => {}, getCount: () => 0 };
 
 const SORTS = () => [
 	{ key: 'custom', label: __( 'Custom order', 'cph-filebird' ) },
@@ -97,9 +101,37 @@ function PinnedRow( { id, label, count, icon, selected, focused, domId, onSelect
 	);
 }
 
-export default function Sidebar( { layout = false, onWidth, onRail, initialWidth, initialRail = false } ) {
+/**
+ * @param {Object}   props
+ * @param {boolean}  props.layout          Page layout: resize handle and hide button.
+ * @param {boolean}  props.collapsible     Show the hide button without the page layout (modals).
+ * @param {number}   props.selected        Controlled selection (modals keep their own); defaults to the store's.
+ * @param {Function} props.onSelect        Called instead of `store.selectFolder` when given.
+ * @param {boolean}  props.rail            Controlled collapsed state.
+ * @param {Function} props.onRail          Collapsed state changed.
+ * @param {Object}   props.selectionSource `{ subscribe, getCount, getCurrent, moveTo }` for "Move selected files here".
+ * @param {boolean}  props.selectionBar    Show a "Move to folder…" bar while files are selected (modals).
+ * @param {Function} props.onWidth         Page layout width callback.
+ * @param {number}   props.initialWidth    Page layout width.
+ * @param {boolean}  props.initialRail     Uncontrolled initial collapsed state.
+ */
+export default function Sidebar( {
+	layout = false,
+	collapsible = false,
+	selected: selectedProp,
+	onSelect,
+	rail: railProp,
+	onRail,
+	selectionSource = noSelection,
+	selectionBar = false,
+	onWidth,
+	initialWidth,
+	initialRail = false,
+} ) {
 	const state = useStore();
-	const { tree, selected, collapsed, sort, editing, counts, notice } = state;
+	const { tree, collapsed, sort, editing, counts, notice } = state;
+	const selected = selectedProp ?? state.selected;
+	const selectionCount = useSyncExternalStore( selectionSource.subscribe, selectionSource.getCount );
 	const canManage = !! data.canManage;
 	const uid = useMemo( () => 'cphfb-' + ++instances, [] );
 	const treeRef = useRef();
@@ -108,7 +140,8 @@ export default function Sidebar( { layout = false, onWidth, onRail, initialWidth
 	const [ focusedId, setFocusedId ] = useState( selected );
 	const [ menu, setMenu ] = useState( null );
 	const [ deleting, setDeleting ] = useState( null );
-	const [ rail, setRail ] = useState( initialRail );
+	const [ railState, setRail ] = useState( initialRail );
+	const rail = railProp ?? railState;
 	const [ drag, setDrag ] = useState( null ); // { id, over: { id, position } }
 
 	const searching = search.trim() !== '';
@@ -135,7 +168,7 @@ export default function Sidebar( { layout = false, onWidth, onRail, initialWidth
 
 	/* Actions -------------------------------------------------------------- */
 
-	const select = useCallback( ( id ) => store.selectFolder( id ), [] );
+	const select = useCallback( ( id ) => ( onSelect ? onSelect( id ) : store.selectFolder( id ) ), [ onSelect ] );
 	const toggle = useCallback( ( id, open ) => store.setExpanded( id, open ), [] );
 	const startRename = useCallback( ( id ) => canManage && store.setEditing( { id } ), [ canManage ] );
 	const cancelRename = useCallback( () => {
@@ -360,6 +393,20 @@ export default function Sidebar( { layout = false, onWidth, onRail, initialWidth
 
 	const menuItems = menuNode
 		? [
+				...( selectionCount > 0
+					? [
+							{
+								key: 'move-here',
+								label: sprintf(
+									/* translators: %s: number of selected files */
+									_n( 'Move %s selected file here', 'Move %s selected files here', selectionCount, 'cph-filebird' ),
+									selectionCount.toLocaleString()
+								),
+								onSelect: () => selectionSource.moveTo( menuNode.id ),
+							},
+							{ type: 'separator' },
+					  ]
+					: [] ),
 				{ key: 'new', label: __( 'New subfolder', 'cph-filebird' ), onSelect: () => newFolder( menuNode.id ) },
 				{ key: 'rename', label: __( 'Rename', 'cph-filebird' ), shortcut: 'F2', onSelect: () => startRename( menuNode.id ) },
 				{ key: 'duplicate', label: __( 'Duplicate', 'cph-filebird' ), onSelect: () => store.duplicateFolder( menuNode.id ) },
@@ -374,6 +421,19 @@ export default function Sidebar( { layout = false, onWidth, onRail, initialWidth
 	const deletingNode = deleting ? findNode( tree, deleting ) : null;
 
 	/* Layout --------------------------------------------------------------- */
+
+	const openMovePicker = ( event ) =>
+		openFolderPicker( {
+			anchor: event.currentTarget,
+			count: selectionCount,
+			current: selectionSource.getCurrent?.() ?? null,
+			onPick: ( folder ) => selectionSource.moveTo( folder ),
+		} );
+	const moveLabel = sprintf(
+		/* translators: %s: number of selected files */
+		_n( 'Move %s selected file to a folder', 'Move %s selected files to a folder', selectionCount, 'cph-filebird' ),
+		selectionCount.toLocaleString()
+	);
 
 	const toggleRail = () => {
 		const next = ! rail;
@@ -397,6 +457,22 @@ export default function Sidebar( { layout = false, onWidth, onRail, initialWidth
 				<span className="cphfb-rail__current" title={ store.folderLabel( selected ) }>
 					<FolderIcon size={ 18 } color={ findNode( tree, selected )?.color } />
 				</span>
+				{ selectionBar && selectionCount > 0 && (
+					<button
+						type="button"
+						className="cphfb-icon-button cphfb-rail__move"
+						aria-label={ moveLabel }
+						title={ moveLabel }
+						aria-haspopup="dialog"
+						aria-expanded="false"
+						onClick={ openMovePicker }
+					>
+						<MoveIcon />
+						<span className="cphfb-rail__badge" aria-hidden="true">
+							{ selectionCount > 99 ? '99+' : selectionCount }
+						</span>
+					</button>
+				) }
 			</div>
 		);
 	}
@@ -426,7 +502,7 @@ export default function Sidebar( { layout = false, onWidth, onRail, initialWidth
 							<span>{ __( 'New folder', 'cph-filebird' ) }</span>
 						</button>
 					) }
-					{ layout && (
+					{ ( layout || collapsible ) && (
 						<button
 							type="button"
 							className="cphfb-icon-button"
@@ -597,6 +673,28 @@ export default function Sidebar( { layout = false, onWidth, onRail, initialWidth
 					</div>
 				) }
 			</div>
+
+			{ selectionBar && selectionCount > 0 && (
+				<div className="cphfb-selection-bar">
+					<span className="cphfb-selection-bar__count">
+						{ sprintf(
+							/* translators: %s: number of selected files */
+							_n( '%s selected', '%s selected', selectionCount, 'cph-filebird' ),
+							selectionCount.toLocaleString()
+						) }
+					</span>
+					<button
+						type="button"
+						className="button cphfb-selection-bar__move"
+						aria-label={ moveLabel }
+						aria-haspopup="dialog"
+						aria-expanded="false"
+						onClick={ openMovePicker }
+					>
+						{ __( 'Move to folder…', 'cph-filebird' ) }
+					</button>
+				</div>
+			) }
 
 			{ layout && <ResizeHandle initialWidth={ initialWidth } onWidth={ onWidth } /> }
 

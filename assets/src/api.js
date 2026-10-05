@@ -46,8 +46,8 @@ export const getCounts = () => request( '/counts' );
 
 export const getUserSettings = () => request( '/user-settings' );
 
-export const saveUserSettings = ( settings ) =>
-	request( '/user-settings', { method: 'POST', data: settings } );
+export const saveUserSettings = ( settings, keepalive = false ) =>
+	request( '/user-settings', { method: 'POST', data: settings, ...( keepalive ? { keepalive: true } : {} ) } );
 
 /**
  * Human-readable message for a REST error.

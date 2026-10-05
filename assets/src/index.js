@@ -1,5 +1,9 @@
 /**
- * cph-filebird admin entry: folder sidebar for the Media Library.
+ * cph-filebird admin entry: folder sidebar for the Media Library, folder
+ * column in every `wp.media` frame, upload routing, attachment drag to folder.
+ *
+ * Nothing heavy runs on load: prototype hooks only. React mounts when a
+ * library browser is built (or on upload.php).
  */
 import domReady from '@wordpress/dom-ready';
 import { createRoot } from '@wordpress/element';
@@ -11,8 +15,15 @@ import { storage } from './storage';
 import { ALL } from './tree';
 import Sidebar from './components/Sidebar';
 import { clampWidth } from './components/ResizeHandle';
-import { installGrid, requery, getLibrary } from './media/grid';
+import { installGrid, requery, getLibrary, gridSelection } from './media/grid';
 import { installList } from './media/list';
+import { installModals } from './media/modal';
+import { installUploader } from './media/uploader';
+import { installAttachmentDnd } from './media/dnd';
+import { installCompat } from './media/compat';
+import { contextFor, pageFolderChanged, setPageFolderGetter, uploadTarget } from './media/context';
+import { installQueryHook, moveAttachments } from './media/move';
+import { openFolderPicker } from './components/FolderPicker';
 
 const data = window.cphfbData || {};
 const mode = data.screen?.mode || '';
@@ -112,6 +123,7 @@ function mountPage() {
 		keepAlive: true,
 		initialWidth: clampWidth( data.userSettings?.sidebar_width || storage.get( 'width', 0 ) ),
 		initialRail: body.classList.contains( 'cphfb-is-rail' ),
+		selectionSource: mode === 'grid' ? gridSelection : undefined,
 		onWidth( width, commit ) {
 			body.style.setProperty( '--cphfb-width', width + 'px' );
 			if ( commit ) {
@@ -136,15 +148,26 @@ window.cphfb = {
 	refreshCounts: () => store.refreshCounts(),
 	mount,
 	on: store.on,
-	// For stage B (modals, uploader, attachment drag).
 	getState: store.getState,
 	subscribe: store.subscribe,
 	assign: store.assignToFolder,
 	requery,
 	getLibrary,
+	// Stage B.
+	moveAttachments: ( folder, ids, options ) => moveAttachments( folder, ids, options ),
+	openFolderPicker,
+	uploadTarget: ( el ) => uploadTarget( contextFor( el || document.body ) ),
 };
 
+installQueryHook();
+installModals( start );
+installUploader( start );
+installAttachmentDnd();
+installCompat();
+
 if ( mode === 'grid' ) {
+	setPageFolderGetter( () => store.getState().selected );
+	store.on( 'select', pageFolderChanged );
 	installGrid( () => {
 		start();
 		return store.getState().selected;
