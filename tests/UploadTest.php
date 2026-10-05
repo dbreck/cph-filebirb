@@ -42,7 +42,18 @@ class UploadTest extends TestCase {
 
 	public function test_no_source_means_no_assignment(): void {
 		$this->make( 'A' );
+		$before = $this->assignments()->counts();
 		$this->assertSame( 0, $this->assignments()->get_folder_id( $this->upload() ) );
+		$after = $this->assignments()->counts();
+		$this->assertSame( $before['all'] + 1, $after['all'] );
+		$this->assertSame( $before['uncategorized'] + 1, $after['uncategorized'] );
+	}
+
+	public function test_delete_unassigned_invalidates_counts(): void {
+		$id     = $this->upload();
+		$before = $this->assignments()->counts();
+		wp_delete_attachment( $id, true );
+		$this->assertSame( $before['all'] - 1, $this->assignments()->counts()['all'] );
 	}
 
 	public function test_precedence(): void {

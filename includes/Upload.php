@@ -75,6 +75,8 @@ final class Upload {
 		if ( $folder > 0 ) {
 			Assignment::get_instance()->assign( $folder, array( (int) $attachment_id ) );
 		}
+		// `all` and `uncategorized` change even when the file lands in no folder.
+		Assignment::get_instance()->invalidate_counts();
 	}
 
 	/**
