@@ -2,7 +2,7 @@
 
 Clear pH's media-library folder plugin: a from-scratch, data-compatible replacement for FileBird Pro. It uses FileBird's own tables (`{prefix}fbv`, `{prefix}fbv_attachment_folder`), so a site swaps plugins with no migration.
 
-The repository folder is named `cph-filebirb`; everything inside uses `cph-filebirb`. `PLAN.md` is the spec and `CLAUDE.md` holds the hard rules and decisions.
+`CLAUDE.md` holds the architecture, hard rules and decisions.
 
 ## Architecture
 

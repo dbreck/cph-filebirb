@@ -8,3 +8,5 @@ node_modules/
 .phpunit.result.cache
 .phpunit.lock/
 dist/
+PLAN.md
+CLAUDE.local.md
