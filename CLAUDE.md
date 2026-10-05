@@ -25,7 +25,7 @@ This repo is public. Keep client names, site URLs, local filesystem paths and in
 - **Backend:** done. Models, query filtering, upload routing, REST, CLI, legacy hooks, settings page.
 - **Media Library sidebar and `wp.media` modals:** done. Folder tree, uploader folder picker, drag attachments onto folders, "Move to folder…" picker.
 - **Integrations:** verified on a real Salient + WPBakery site (grid, list, featured image, classic Add Media, WPBakery backend and frontend editors, Salient metaboxes, Redux theme options). Not yet verified: Nectar Slider and Home Slider image fields, ACF fields, Safari and Firefox drag and drop.
-- **Distribution:** v0.1.0 is released. The updater, with no token, sees the release and its `cph-filebirb.zip` asset. Not yet exercised: a real old-to-new update on a site, installing from the zip on a non-symlinked site, and `bin/cutover.sh` over SSH.
+- **Distribution:** v0.1.1 is released. The updater, with no token, sees the release and its `cph-filebirb.zip` asset. Not yet exercised: a real old-to-new update on a site, installing from the zip on a non-symlinked site, and `bin/cutover.sh` over SSH.
 - **Extra features** (auto-foldering, folder templates, smart folders, zip download and so on): none chosen, none built.
 
 Keep this section current.

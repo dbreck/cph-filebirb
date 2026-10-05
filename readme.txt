@@ -4,7 +4,7 @@ Tags: media library, folders, media folders, filebird
 Requires at least: 6.5
 Tested up to: 6.8
 Requires PHP: 8.1
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,9 @@ The plugin checks the GitHub releases of `dbreck/cph-filebirb` and offers update
 No. There is one shared folder tree per site. FileBird's per-user folder mode is not supported; existing folders created in that mode are all shown.
 
 == Changelog ==
+
+= 0.1.1 =
+* No functional changes. First release delivered through the built-in updater.
 
 = 0.1.0 =
 * First release.

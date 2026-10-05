@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       CPH FileBirb
  * Description:       Media library folders by Clear pH. Data-compatible replacement for FileBird.
- * Version:           0.1.0
+ * Version:           0.1.1
  * Author:            Clear pH
  * Author URI:        https://clearph.com
  * License:           GPL-2.0-or-later
@@ -21,7 +21,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CPHFB_VERSION', '0.1.0' );
+define( 'CPHFB_VERSION', '0.1.1' );
 define( 'CPHFB_FILE', __FILE__ );
 define( 'CPHFB_PATH', plugin_dir_path( __FILE__ ) );
 define( 'CPHFB_URL', plugin_dir_url( __FILE__ ) );

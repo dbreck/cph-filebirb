@@ -130,7 +130,10 @@ log "Pre-swap counts: folders=$PRE_FOLDERS assignments=$PRE_ASSIGN"
 
 # Backup (local file, streamed from the remote over stdout).
 STAMP="$(date +%Y%m%d-%H%M%S)"
-SITE_TAG="$(printf '%s' "$WP_PREFIX" | tr -c 'A-Za-z0-9._-' '_' | cut -c1-60)"
+# Name the backup after the site's host, falling back to the WP-CLI prefix.
+SITE_TAG="$(wp_run option get home 2>/dev/null | tr -d '\r' | grep -E '^https?://' | tail -n 1 | sed -E 's#^https?://##; s#/.*$##')"
+[ -n "$SITE_TAG" ] || SITE_TAG="$WP_PREFIX"
+SITE_TAG="$(printf '%s' "$SITE_TAG" | tr -c 'A-Za-z0-9._-' '_' | cut -c1-60)"
 BACKUP="$BACKUP_DIR/fbv-${SITE_TAG}-${STAMP}.sql"
 if [ "$HAVE_TABLES" -eq 1 ]; then
 	if [ "$DRY_RUN" -eq 1 ]; then
