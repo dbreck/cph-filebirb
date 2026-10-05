@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       CPH FileBird
+ * Plugin Name:       CPH FileBirb
  * Description:       Media library folders by Clear pH. Data-compatible replacement for FileBird.
  * Version:           0.1.0
  * Author:            Clear pH
@@ -50,7 +50,7 @@ if ( version_compare( PHP_VERSION, CPHFB_MIN_PHP, '<' ) || version_compare( get_
 	cphfb_boot_notice(
 		sprintf(
 			/* translators: 1: required PHP version, 2: required WordPress version, 3: current PHP version, 4: current WordPress version. */
-			__( 'CPH FileBird needs PHP %1$s+ and WordPress %2$s+ (this site runs PHP %3$s, WordPress %4$s). It is not running.', 'cph-filebird' ),
+			__( 'CPH FileBirb needs PHP %1$s+ and WordPress %2$s+ (this site runs PHP %3$s, WordPress %4$s). It is not running.', 'cph-filebird' ),
 			CPHFB_MIN_PHP,
 			CPHFB_MIN_WP,
 			PHP_VERSION,
@@ -61,7 +61,7 @@ if ( version_compare( PHP_VERSION, CPHFB_MIN_PHP, '<' ) || version_compare( get_
 }
 
 if ( ! is_readable( CPHFB_PATH . 'vendor/autoload.php' ) ) {
-	cphfb_boot_notice( __( 'CPH FileBird is missing its autoloader. Run "composer install" in the plugin folder or reinstall the plugin.', 'cph-filebird' ) );
+	cphfb_boot_notice( __( 'CPH FileBirb is missing its autoloader. Run "composer install" in the plugin folder or reinstall the plugin.', 'cph-filebird' ) );
 	return;
 }
 

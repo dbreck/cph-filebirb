@@ -2,7 +2,7 @@
 /**
  * Uninstall cleanup.
  *
- * Removes only CPH FileBird's own data. FileBird's tables (`{prefix}fbv`,
+ * Removes only CPH FileBirb's own data. FileBird's tables (`{prefix}fbv`,
  * `{prefix}fbv_attachment_folder`) and `fbv_*` options are kept so the site
  * can reinstall or switch back to FileBird with every folder intact. Define
  * `CPHFB_REMOVE_ALL_DATA` as true in wp-config.php to drop those as well.

@@ -243,6 +243,6 @@ final class Csv {
 	 * @return \WP_Error
 	 */
 	private function invalid(): \WP_Error {
-		return new \WP_Error( 'invalid_csv', __( 'This file is not a FileBird or CPH FileBird folder export.', 'cph-filebird' ), array( 'status' => 400 ) );
+		return new \WP_Error( 'invalid_csv', __( 'This file is not a FileBird or CPH FileBirb folder export.', 'cph-filebird' ), array( 'status' => 400 ) );
 	}
 }

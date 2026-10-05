@@ -226,7 +226,7 @@ final class Commands {
 	}
 
 	/**
-	 * Import a FileBird or CPH FileBird CSV export. Folders merge by name under the same parent.
+	 * Import a FileBird or CPH FileBirb CSV export. Folders merge by name under the same parent.
 	 *
 	 * ## OPTIONS
 	 *

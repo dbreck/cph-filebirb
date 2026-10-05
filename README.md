@@ -1,4 +1,4 @@
-# CPH FileBird
+# CPH FileBirb
 
 Clear pH's media-library folder plugin: a from-scratch, data-compatible replacement for FileBird Pro. It uses FileBird's own tables (`{prefix}fbv`, `{prefix}fbv_attachment_folder`), so a site swaps plugins with no migration.
 
@@ -28,7 +28,7 @@ PHP 8.1+, WordPress 6.5+. Namespace `CPH\FileBird`, PSR-4 from `includes/`, one 
 
 Every mutation fires the `cphfb_*` hook first, then the FileBird hook with the same arguments.
 
-| CPH FileBird | FileBird | Args |
+| CPH FileBirb | FileBird | Args |
 | --- | --- | --- |
 | `cphfb_folder_created` | `fbv_after_folder_created` | `int $folder_id, array $node` |
 | `cphfb_folder_renamed` | `fbv_after_folder_renamed` | `int $folder_id, string $new_name` |
@@ -42,7 +42,7 @@ Every mutation fires the `cphfb_*` hook first, then the FileBird hook with the s
 
 Filters (value first):
 
-| CPH FileBird | FileBird | Value, extra args |
+| CPH FileBirb | FileBird | Value, extra args |
 | --- | --- | --- |
 | `cphfb_folder_created_by` | `fbv_folder_created_by` | `int $created_by = 0` |
 | `cphfb_will_check_author` | `fbv_will_check_author` | `bool` (reserved, the tree is shared) |
@@ -137,7 +137,7 @@ Sites pick the update up on their next update check (Dashboard > Updates > Check
 
 ## Cutover
 
-`bin/cutover.sh` switches one site from FileBird to CPH FileBird:
+`bin/cutover.sh` switches one site from FileBird to CPH FileBirb:
 
 ```
 bin/cutover.sh --wp "wp --ssh=user@host/path" --zip https://github.com/dbreck/cph-filebird/releases/download/vX.Y.Z/cph-filebird.zip --dry-run
@@ -145,4 +145,4 @@ bin/cutover.sh --wp "wplocal mysite"
 bin/cutover.sh --wp "npx wp-env run cli wp" --dry-run
 ```
 
-It checks the tables, records folder and assignment counts from SQL, exports both tables to a local backup (never on the remote host), deactivates FileBird, installs and activates CPH FileBird, runs `wp cphfb verify`, and compares counts. Any failure rolls back to FileBird and exits non-zero. FileBird's plugin files are never deleted. `--zip` is read on the site's host, so use a release URL over SSH. If the site's `cph-filebird` folder is a symlink or dev checkout, the install step is skipped.
+It checks the tables, records folder and assignment counts from SQL, exports both tables to a local backup (never on the remote host), deactivates FileBird, installs and activates CPH FileBirb, runs `wp cphfb verify`, and compares counts. Any failure rolls back to FileBird and exits non-zero. FileBird's plugin files are never deleted. `--zip` is read on the site's host, so use a release URL over SSH. If the site's `cph-filebird` folder is a symlink or dev checkout, the install step is skipped.

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Per-site cutover from FileBird (Pro or free) to CPH FileBird.
+# Per-site cutover from FileBird (Pro or free) to CPH FileBirb.
 #
 # Usage:
 #   bin/cutover.sh --wp "<wp-cli prefix>" [--zip <path|url>] [--backup-dir <dir>] [--dry-run]

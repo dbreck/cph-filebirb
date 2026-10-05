@@ -95,7 +95,7 @@ final class Plugin {
 			return;
 		}
 		echo '<div class="notice notice-error"><p>';
-		echo esc_html__( 'CPH FileBird is paused because FileBird is active. Deactivate FileBird to use CPH FileBird. Your folders are shared, nothing is lost.', 'cph-filebird' );
+		echo esc_html__( 'CPH FileBirb is paused because FileBird is active. Deactivate FileBird to use CPH FileBirb. Your folders are shared, nothing is lost.', 'cph-filebird' );
 		echo '</p></div>';
 	}
 

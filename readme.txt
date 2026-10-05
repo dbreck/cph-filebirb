@@ -1,4 +1,4 @@
-=== CPH FileBird ===
+=== CPH FileBirb ===
 Contributors: clearph
 Tags: media library, folders, media folders, filebird
 Requires at least: 6.5
@@ -12,7 +12,7 @@ Media library folders by Clear pH. A data-compatible replacement for FileBird.
 
 == Description ==
 
-CPH FileBird organises the WordPress media library into folders. It is built by Clear pH as a drop-in replacement for FileBird and FileBird Pro.
+CPH FileBirb organises the WordPress media library into folders. It is built by Clear pH as a drop-in replacement for FileBird and FileBird Pro.
 
 * Folder tree in the media library grid, list view and the media modal.
 * Drag files into folders, bulk move from the list view, and pick a folder per file on the attachment edit screen.
@@ -24,11 +24,11 @@ CPH FileBird organises the WordPress media library into folders. It is built by 
 
 = FileBird compatibility =
 
-CPH FileBird reads and writes FileBird's own database tables (`{prefix}fbv` and `{prefix}fbv_attachment_folder`) with the exact same schema, and keeps folder colours in FileBird's `fbv_folder_colors` option. A site can switch from FileBird to CPH FileBird, or back, with no migration step.
+CPH FileBirb reads and writes FileBird's own database tables (`{prefix}fbv` and `{prefix}fbv_attachment_folder`) with the exact same schema, and keeps folder colours in FileBird's `fbv_folder_colors` option. A site can switch from FileBird to CPH FileBirb, or back, with no migration step.
 
 It also fires FileBird's `fbv_*` action and filter hooks alongside its own `cphfb_*` hooks, so theme and plugin code written for FileBird keeps working.
 
-Never run both at once. If FileBird is active, CPH FileBird pauses itself and shows a notice until FileBird is deactivated.
+Never run both at once. If FileBird is active, CPH FileBirb pauses itself and shows a notice until FileBird is deactivated.
 
 == Installation ==
 
@@ -41,7 +41,7 @@ Never run both at once. If FileBird is active, CPH FileBird pauses itself and sh
 
 1. Take a backup of the database (at least the `fbv` and `fbv_attachment_folder` tables).
 2. Deactivate FileBird or FileBird Pro. Do not delete it yet.
-3. Install and activate CPH FileBird.
+3. Install and activate CPH FileBirb.
 4. Open the media library and check your folders. `wp cphfb verify` reports schema, counts and any data oddities.
 5. Once you are happy, you can delete FileBird's plugin files.
 
@@ -51,15 +51,15 @@ Clear pH sites use `bin/cutover.sh` from the plugin's repository, which does all
 
 = Will I lose my folders? =
 
-No. CPH FileBird uses the same tables FileBird already created, so every folder and every file assignment is there the moment you activate it. Nothing is copied or converted.
+No. CPH FileBirb uses the same tables FileBird already created, so every folder and every file assignment is there the moment you activate it. Nothing is copied or converted.
 
 = Can I go back to FileBird? =
 
-Yes. Deactivate CPH FileBird and reactivate FileBird. Any folders you created or files you moved in the meantime are in the shared tables, so FileBird shows them too. Uninstalling CPH FileBird also leaves the folder tables and FileBird's options in place.
+Yes. Deactivate CPH FileBirb and reactivate FileBird. Any folders you created or files you moved in the meantime are in the shared tables, so FileBird shows them too. Uninstalling CPH FileBirb also leaves the folder tables and FileBird's options in place.
 
 = What does uninstalling remove? =
 
-Only CPH FileBird's own settings (`cphfb_settings`, `cphfb_db_version`, per-user settings, and cached counts). Folder data is kept so you can reinstall or switch back. To remove the folder tables too, add `define( 'CPHFB_REMOVE_ALL_DATA', true );` to `wp-config.php` before deleting the plugin.
+Only CPH FileBirb's own settings (`cphfb_settings`, `cphfb_db_version`, per-user settings, and cached counts). Folder data is kept so you can reinstall or switch back. To remove the folder tables too, add `define( 'CPHFB_REMOVE_ALL_DATA', true );` to `wp-config.php` before deleting the plugin.
 
 = How do updates work? =
 
